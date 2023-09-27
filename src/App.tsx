@@ -9,6 +9,7 @@ import Forgetpass from './pages/Authentication/Forgetpass';
 import Loader from './common/Loader';
 import routes from './routes';
 import Home from './pages/Dashboard/Home';
+import ConfirForgetpass from './pages/Authentication/confirmation';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/auth/Forgetpass" element={<Forgetpass />} />
+        <Route path="/auth/ConfirForgetpass" element={<ConfirForgetpass />} /> 
         <Route element={<DefaultLayout />}>
           <Route index element={<Home />} />
           <Route index element={<ECommerce />} />

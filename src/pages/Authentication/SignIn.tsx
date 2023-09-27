@@ -23,9 +23,9 @@ const SignIn = () => {
               <div className="h-px border border-black mx-5"/>
               <div className="w-full p-2 sm:p-5.5 xl:p-10.5">
                 <form>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="mb-2.5 block font-medium text-black dark:text-white">
-                      Username
+                      Email
                     </label>
                     <div className="relative bg-[#E5E5E5] rounded-md">
                       <input
@@ -54,7 +54,7 @@ const SignIn = () => {
                     </div>
                   </div>
 
-                  <div className="mb-6">
+                  <div className="mb-10">
                     <label className="mb-2.5 block font-medium text-black dark:text-white">
                       Password
                     </label>
@@ -89,7 +89,7 @@ const SignIn = () => {
                     </div>
                   </div>
 
-                  <div className="mb-6 text-right">
+                  <div className="mb-10 text-right">
                     <p>
                       <Link to="/auth/forgetpass" className="text-primary font-medium">
                         Lupa Kata Sandi ?
@@ -97,7 +97,7 @@ const SignIn = () => {
                     </p>
                   </div>
 
-                  <div className="mb-5">
+                  <div className="mb-10">
                     <input
                       type="submit"
                       value="Masuk"
@@ -105,7 +105,7 @@ const SignIn = () => {
                     />
                   </div>
 
-                  <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                  {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                     <span>
                       <svg
                         width="20"
@@ -140,7 +140,7 @@ const SignIn = () => {
                       </svg>
                     </span>
                     Sign in with Google
-                  </button>
+                  </button> */}
 
                   <div className="mt-6 text-center">
                     <p>

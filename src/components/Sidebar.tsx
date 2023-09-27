@@ -75,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           aria-expanded={sidebarOpen}
           className="block lg:hidden"
         >
-          <svg
+          {/* <svg
             className="fill-current"
             width="20"
             height="18"
@@ -87,7 +87,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               d="M19 8.175H2.98748L9.36248 1.6875C9.69998 1.35 9.69998 0.825 9.36248 0.4875C9.02498 0.15 8.49998 0.15 8.16248 0.4875L0.399976 8.3625C0.0624756 8.7 0.0624756 9.225 0.399976 9.5625L8.16248 17.4375C8.31248 17.5875 8.53748 17.7 8.76248 17.7C8.98748 17.7 9.17498 17.625 9.36248 17.475C9.69998 17.1375 9.69998 16.6125 9.36248 16.275L3.02498 9.8625H19C19.45 9.8625 19.825 9.4875 19.825 9.0375C19.825 8.55 19.45 8.175 19 8.175Z"
               fill=""
             />
-          </svg>
+          </svg> */}
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
@@ -206,6 +206,220 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
               {/* <!-- Menu Item Dashboard --> */}
+
+              {/* <!-- Menu Item Report --> */}
+              <li>
+                <NavLink
+                  to="/report"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('report') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 36 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.8571 3.42857C12.8571 1.53571 14.5848 0 16.7143 0H19.2857C21.4152 0 23.1429 1.53571 23.1429 3.42857V28.5714C23.1429 30.4643 21.4152 32 19.2857 32H16.7143C14.5848 32 12.8571 30.4643 12.8571 28.5714V3.42857ZM0 17.1429C0 15.25 1.72768 13.7143 3.85714 13.7143H6.42857C8.55804 13.7143 10.2857 15.25 10.2857 17.1429V28.5714C10.2857 30.4643 8.55804 32 6.42857 32H3.85714C1.72768 32 0 30.4643 0 28.5714V17.1429ZM29.5714 4.57143H32.1429C34.2723 4.57143 36 6.10714 36 8V28.5714C36 30.4643 34.2723 32 32.1429 32H29.5714C27.442 32 25.7143 30.4643 25.7143 28.5714V8C25.7143 6.10714 27.442 4.57143 29.5714 4.57143Z"
+                      fill=""
+                      fillOpacity="0.8"
+                    />
+                  </svg>
+                  Report
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item Report --> */}
+
+             {/* <!-- Menu Item Master Data --> */}
+             <SidebarLinkGroup
+                activeCondition={
+                  pathname === '/Master Data' || pathname.includes('masterdata')
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <NavLink
+                        to="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === '/masterdata' ||
+                            pathname.includes('masterdata')) &&
+                          'bg-graydark dark:bg-meta-4'
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <svg
+                          className="fill-current"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 36 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M36 5V8C36 10.7625 27.9402 13 18 13C8.05982 13 0 10.7625 0 8V5C0 2.2375 8.05982 0 18 0C27.9402 0 36 2.2375 36 5ZM31.5964 13.4187C33.2679 12.9563 34.8027 12.3625 36 11.6313V18C36 20.7625 27.9402 23 18 23C8.05982 23 0 20.7625 0 18V11.6313C1.19732 12.3688 2.73214 12.9563 4.40357 13.4187C8.01161 14.4187 12.817 15 18 15C23.183 15 27.9884 14.4187 31.5964 13.4187ZM0 21.6313C1.19732 22.3687 2.73214 22.9563 4.40357 23.4188C8.01161 24.4188 12.817 25 18 25C23.183 25 27.9884 24.4188 31.5964 23.4188C33.2679 22.9563 34.8027 22.3625 36 21.6313V27C36 29.7625 27.9402 32 18 32C8.05982 32 0 29.7625 0 27V21.6313Z"
+                            fill=""
+                            fillOpacity="0.7"
+                          />
+                        </svg>
+                        Master Data
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && 'rotate-180'
+                          }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </NavLink>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${
+                          !open && 'hidden'
+                        }`}
+                      >
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                          <li>
+                            <NavLink
+                              to="/masterdata/transmisi"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Transmisi
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/masterdata/mwtransmisi"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Mw Transmisi
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/masterdata/mvartransmisi"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Mvar Transmisi
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+              {/* <!-- Menu Item Forms --> */}
+
+              {/* <!-- Menu Monitoring Row --> */}
+              <li>
+                <NavLink
+                  to="/monitoringrow"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('monitoringrow') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 37 37"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18.5 6.9375C21.275 6.9375 23.826 7.91309 25.8205 9.54629L23.4646 11.9021C23.1322 12.2346 23.0383 12.7332 23.2117 13.1596C23.3852 13.5859 23.8115 13.875 24.2812 13.875H32.375C33.0109 13.875 33.5312 13.3547 33.5312 12.7188V4.625C33.5312 4.15527 33.2494 3.73613 32.8158 3.55547C32.3822 3.3748 31.8836 3.47598 31.5584 3.8084L29.1014 6.26543C26.2613 3.80117 22.5541 2.3125 18.5 2.3125C17.7123 2.3125 16.9463 2.37031 16.1875 2.47871V7.16875C16.9318 7.01699 17.7051 6.9375 18.5 6.9375ZM9.54629 11.1795L11.9021 13.5354C12.2346 13.8678 12.7332 13.9617 13.1596 13.7883C13.5859 13.6148 13.875 13.1885 13.875 12.7188V4.625C13.875 3.98906 13.3547 3.46875 12.7188 3.46875H4.625C4.15527 3.46875 3.73613 3.75059 3.55547 4.18418C3.3748 4.61777 3.47598 5.11641 3.8084 5.4416L6.26543 7.89863C3.80117 10.7387 2.3125 14.4459 2.3125 18.5C2.3125 19.2877 2.37031 20.0537 2.47871 20.8125H7.16875C7.01699 20.0682 6.9375 19.2949 6.9375 18.5C6.9375 15.725 7.91309 13.174 9.54629 11.1795ZM34.5213 16.1875H29.8312C29.983 16.9318 30.0625 17.7051 30.0625 18.5C30.0625 21.275 29.0869 23.826 27.4537 25.8205L25.0979 23.4646C24.7654 23.1322 24.2668 23.0383 23.8404 23.2117C23.4141 23.3852 23.125 23.8115 23.125 24.2812V32.375C23.125 33.0109 23.6453 33.5312 24.2812 33.5312H32.375C32.8447 33.5312 33.2639 33.2494 33.4445 32.8158C33.6252 32.3822 33.524 31.8836 33.1916 31.5584L30.7346 29.1014C33.1988 26.2613 34.6875 22.5541 34.6875 18.5C34.6875 17.7123 34.6297 16.9463 34.5213 16.1875ZM18.5 30.0625C15.725 30.0625 13.174 29.0869 11.1795 27.4537L13.5354 25.0979C13.8678 24.7654 13.9617 24.2668 13.7883 23.8404C13.6148 23.4141 13.1885 23.125 12.7188 23.125H4.625C3.98906 23.125 3.46875 23.6453 3.46875 24.2812V32.375C3.46875 32.8447 3.75059 33.2639 4.18418 33.4445C4.61777 33.6252 5.11641 33.524 5.4416 33.1916L7.89863 30.7346C10.7387 33.1988 14.4459 34.6875 18.5 34.6875C19.2877 34.6875 20.0537 34.6297 20.8125 34.5213V29.8312C20.0682 29.983 19.2949 30.0625 18.5 30.0625Z"
+                      fill=""
+                    />
+                  </svg>
+                  Monitoring Row
+                </NavLink>
+              </li>
+              {/* <!-- Menu Monitoring Row --> */}
+
+              {/* <!-- Menu Berita Acara--> */}
+              <li>
+                <NavLink
+                  to="/beritaacara"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('beritaacara') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 37 37"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.125 7.125C7.125 4.50508 9.25508 2.375 11.875 2.375H33.25C35.8699 2.375 38 4.50508 38 7.125V30.875C38 33.4949 35.8699 35.625 33.25 35.625H5.9375C2.65703 35.625 0 32.968 0 29.6875V9.5C0 8.18633 1.06133 7.125 2.375 7.125C3.68867 7.125 4.75 8.18633 4.75 9.5V29.6875C4.75 30.3406 5.28438 30.875 5.9375 30.875C6.59062 30.875 7.125 30.3406 7.125 29.6875V7.125ZM11.875 8.90625V14.8438C11.875 15.8309 12.6691 16.625 13.6562 16.625H21.9688C22.9559 16.625 23.75 15.8309 23.75 14.8438V8.90625C23.75 7.91914 22.9559 7.125 21.9688 7.125H13.6562C12.6691 7.125 11.875 7.91914 11.875 8.90625ZM27.3125 8.3125C27.3125 8.96562 27.8469 9.5 28.5 9.5H32.0625C32.7156 9.5 33.25 8.96562 33.25 8.3125C33.25 7.65938 32.7156 7.125 32.0625 7.125H28.5C27.8469 7.125 27.3125 7.65938 27.3125 8.3125ZM27.3125 15.4375C27.3125 16.0906 27.8469 16.625 28.5 16.625H32.0625C32.7156 16.625 33.25 16.0906 33.25 15.4375C33.25 14.7844 32.7156 14.25 32.0625 14.25H28.5C27.8469 14.25 27.3125 14.7844 27.3125 15.4375ZM11.875 22.5625C11.875 23.2156 12.4094 23.75 13.0625 23.75H32.0625C32.7156 23.75 33.25 23.2156 33.25 22.5625C33.25 21.9094 32.7156 21.375 32.0625 21.375H13.0625C12.4094 21.375 11.875 21.9094 11.875 22.5625ZM11.875 29.6875C11.875 30.3406 12.4094 30.875 13.0625 30.875H32.0625C32.7156 30.875 33.25 30.3406 33.25 29.6875C33.25 29.0344 32.7156 28.5 32.0625 28.5H13.0625C12.4094 28.5 11.875 29.0344 11.875 29.6875Z"
+                      fill=""
+                    />
+                  </svg>
+                  Berita Acara
+                </NavLink>
+              </li>
+              {/* <!-- Menu Berita Acara --> */}
+
+              {/* <!-- Menu help & Feedback--> */}
+              <li>
+                <NavLink
+                  to="/helpfeedback"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('helpfeedback') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 37 37"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18 32C22.7739 32 27.3523 30.3143 30.7279 27.3137C34.1036 24.3131 36 20.2435 36 16C36 11.7565 34.1036 7.68687 30.7279 4.68629C27.3523 1.68571 22.7739 0 18 0C13.2261 0 8.64773 1.68571 5.27208 4.68629C1.89642 7.68687 0 11.7565 0 16C0 20.2435 1.89642 24.3131 5.27208 27.3137C8.64773 30.3143 13.2261 32 18 32ZM11.9391 10.3313C12.4945 8.9375 13.9852 8 15.6516 8H19.7508C22.2047 8 24.1875 9.76875 24.1875 11.9438C24.1875 13.3563 23.3367 14.6625 21.9586 15.3687L19.6875 16.525C19.6734 17.3375 18.9211 18 18 18C17.0648 18 16.3125 17.3312 16.3125 16.5V15.6562C16.3125 15.1187 16.6359 14.625 17.1633 14.3562L20.2781 12.7688C20.6086 12.6 20.8125 12.2875 20.8125 11.95C20.8125 11.425 20.3344 11.0063 19.7508 11.0063H15.6516C15.4125 11.0063 15.2016 11.1375 15.1242 11.3375L15.0961 11.4125C14.7867 12.1938 13.8164 12.6 12.9445 12.325C12.0727 12.05 11.6086 11.1875 11.918 10.4125L11.9461 10.3375L11.9391 10.3313ZM15.75 22C15.75 21.4696 15.9871 20.9609 16.409 20.5858C16.831 20.2107 17.4033 20 18 20C18.5967 20 19.169 20.2107 19.591 20.5858C20.0129 20.9609 20.25 21.4696 20.25 22C20.25 22.5304 20.0129 23.0391 19.591 23.4142C19.169 23.7893 18.5967 24 18 24C17.4033 24 16.831 23.7893 16.409 23.4142C15.9871 23.0391 15.75 22.5304 15.75 22Z"
+                      fill=""
+                    />
+                  </svg>
+                  Help & Feedback
+                </NavLink>
+              </li>
+              {/* <!-- Menu Help & Feedback --> */}
 
               {/* <!-- Menu Item Calendar --> */}
               <li>

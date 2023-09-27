@@ -58,11 +58,13 @@ const Forgetpass = () => {
 
 
                 <div className="mb-5">
+                {/* <Link to="/auth/ConfirForgetpass"> */}
                   <input
                     type="submit"
                     value="Reset"
-                    className="w-full cursor-pointer rounded-lg bg-[#9BDBE3] p-4 text-[#2B2B2B] font-bold transition hover:bg-opacity-90 break-words]"
+                    className="w-full cursor-pointer rounded-lg bg-[#9BDBE3] p-4 text-[#2B2B2B] font-bold transition hover:bg-opacity-90 break-words"
                   />
+                  {/* </Link> */}
                 </div>
               </form>
             </div>

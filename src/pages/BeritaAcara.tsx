@@ -45,7 +45,7 @@ const BeritaAcara = () => {
             <button
                 className="bg-[#469AA7] text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300 w-28 h-10"
             >
-            <Link to="/NewDataMR">New Data</Link>
+            <Link to="/NewDataBA">New Data</Link>
             </button>
             </div>
             <h1 className="pl-3 text-black text-opacity-70 text-xl font-medium">Tanggal</h1>

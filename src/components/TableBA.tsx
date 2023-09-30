@@ -52,11 +52,6 @@ const TableBA = () => {
               No.
             </h5>
           </div>
-          <div className="p-1.5 text-center xl:p-2.5 border-r">
-            <h5 className="text-xs font-medium font-bold xsm:text-sm">
-              Tanggal
-            </h5>
-          </div>
           <div className="p-1.5 text-center xl:p-2.5 border-r col-span-2">
             <h5 className="text-xs font-medium font-bold xsm:text-sm">
               Nama PIC Inspeksi
@@ -96,15 +91,29 @@ const TableBA = () => {
               Jalur
             </h5>
           </div>
-          <div className="hidden py-1.5 text-center xl:py-2.5 sm:block border-r w-full">
-            <h5 className="text-xs font-medium font-bold xsm:text-sm">
-              Jarak pohon ke konduktor
-            </h5>
-          </div>
           <div className="hidden p-1.5 text-center xl:p-2.5 sm:block border-r w-full">
             <h5 className="text-xs font-medium font-bold xsm:text-sm">
               Tindak Lanjut
             </h5>
+          </div>
+          <div className="flex flex-col items-center justify-center col-span-2 border-r">
+            <div className="p-2 text-center xl:p-3 border-b w-full">
+              <h5 className="text-sm font-medium font-bold">
+                Gambar
+              </h5>
+            </div>
+            <div className="flex justify-between w-full">
+              <div className="p-2 text-center xl:p-3 border-r w-1/2">
+                  <h5 className="text-sm font-medium font-bold">
+                    Sebelum
+                  </h5>
+              </div>
+              <div className="p-2 text-center xl:p-3 w-1/2">
+                  <h5 className="text-sm font-medium font-bold">
+                    Sesudah
+                  </h5>
+              </div>
+            </div>
           </div>
           <div className="hidden p-1.5 text-center xl:p-2.5 sm:block w-full">
             <h5 className="text-xs font-medium font-bold xsm:text-sm">
@@ -116,10 +125,6 @@ const TableBA = () => {
          <div className="grid grid-cols-8 border sm:grid-cols-12">
             <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
                 <p className="text-xs text-black dark:text-white sm:block">1</p>
-            </div>
-
-            <div className="sm:block p-1.5 xl:p-2.5 border-r">
-                <p className="text-xs text-black dark:text-white sm:block">12/09/2023</p>
             </div>
 
             <div className="sm:block p-1.5 xl:p-2.5 border-r col-span-2">
@@ -149,14 +154,24 @@ const TableBA = () => {
             </div>
 
             <div className="sm:block p-1.5 xl:p-2.5 border-r">
-                <p className="text-xs text-black dark:text-white sm:block">10.5</p>
-            </div>
-
-            <div className="sm:block p-1.5 xl:p-2.5 border-r">
                 <p className="text-xs text-black dark:text-white sm:block">-</p>
             </div>
 
-            <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5">
+            <div className="flex flex-col items-center justify-center col-span-2 border-r">
+                <div className="flex justify-between w-full">
+                    <div className="sm:block p-1.5 xl:p-2.5 border-r w-1/2 h-full">
+                        {/* <p className="text-xs text-black dark:text-white sm:block">Image Sebelum</p> */}
+                        <img src="/src/images/bg2.png" alt="iamge Sebelum" className='w-full' />
+                    </div>
+                    <div className="sm:block p-1.5 xl:p-2.5 w-1/2">
+                        {/* <p className="text-xs text-black dark:text-white sm:block">Image Sesudah</p> */}
+                        <img src="/src/images/bg2.png" alt="iamge Sebelum" className='w-full pb-1' />
+                        <img src="/src/images/bg2.png" alt="iamge Sebelum" className='w-full' />
+                    </div>
+                </div>
+            </div>
+
+            <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 ">
              <div className="flex items-center space-x-2 ">
              <Link to="/EditdataMonitoring">
                   <button 

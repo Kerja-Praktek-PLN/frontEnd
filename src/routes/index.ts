@@ -20,6 +20,7 @@ const helpFeedback = lazy (() => import('../pages/HelpFeedback'));
 const NewDataMR = lazy (() => import('../components/NewDataMR'));
 const EditDataMonitoring = lazy (() => import('../components/EdtiDataMonitoring'));
 const BeritaAcara = lazy (() => import('../pages/BeritaAcara'));
+const NewDataBA = lazy (() => import('../components/NewDataBA'));
 
 const coreRoutes = [
   {
@@ -71,6 +72,11 @@ const coreRoutes = [
     path: '/beritaacara',
     title: 'beritaacara',
     component: BeritaAcara,
+  },
+  {
+    path: '/newdataba',
+    title: 'newdataba',
+    component: NewDataBA,
   },
   {
     path: '/helpfeedback',

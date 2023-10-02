@@ -1,34 +1,91 @@
 import React, { useState } from "react";
 
-const ImageUploadModal = ({ isOpen, closeModal }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+interface ImageUploadModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+}
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // You can handle the selected image here
-      setSelectedImage(URL.createObjectURL(file));
+const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal }) => {
+  const [selectedImage1, setSelectedImage1] = useState("");
+
+  const [selectedImage2, setSelectedImage2] = useState("");
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, imageNumber: number) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        if (imageNumber === 1) {
+          setSelectedImage1(imageUrl);
+        } else if (imageNumber === 2) {
+          setSelectedImage2(imageUrl);
+        }
+      }
     }
   };
+  
+
+  const handleUpload = () => {
+    closeModal();
+  }
 
   return (
     <div
       className={`fixed z-99 inset-0 flex items-center justify-center ${
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        isOpen ? "bg-black bg-opacity-40" : "opacity-0 pointer-events-none"
       } transition-opacity duration-300 ease-in-out`}
     >
       <div className="bg-white w-96 p-6 rounded-lg shadow-lg">
         <h2 className="text-lg mb-2 text-black font-medium">Unggah Gambar</h2>
         <div className="h-px mb-2 border border-black" />
         <div className="flex justify-between">
-          <div className="bg-red"></div>
+            <div className="shadow border-lg m-2 w-1/2" >
+              {selectedImage1 && (
+                <div className="border border-black p-5 h-full ">
+                  <img
+                    src={selectedImage1}
+                    alt="Selected 1"
+                    className="max-h-full mx-auto max-w-full"                    
+                  />
+                </div>
+              )}
+              {!selectedImage1 && (
+                <div className="border border-black p-5 h-full flex items-center justify-center">
+                  <span>Sebelum</span>
+                </div>
+              )}
+            </div>
+
+            <div className="shadow border-lg m-2 w-1/2">
+              {selectedImage2 && (
+                <div className="border border-black p-5 h-full">
+                  <img
+                    src={selectedImage2}
+                    alt="Selected 2"
+                    className="max-w-full max-h-full mx-auto"
+                  />
+                </div>
+              )}
+              {!selectedImage2 && (
+                <div className="border border-black p-5 h-full flex items-center justify-center">
+                  <span>Sesudah</span>
+                </div>
+              )}
+            </div>
+
           <div className="flex flex-col">
           <label className="my-2 relative inline-flex items-center bg-[#E5E5E5] text-black opacity-40 rounded-md px-4 py-2 cursor-pointer hover:bg-primary-dark">
             <input 
               type="file"
               accept="image/*"
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={handleImageChange}
+              onChange={(e) => handleImageChange(e, 1)}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onChange={(e) => handleImageChange(e, 2)}
             />
             <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,16 +108,8 @@ const ImageUploadModal = ({ isOpen, closeModal }) => {
             />
           </svg>
             Unggah File
-          </label>
-            {selectedImage && (
-            <div className="mt-4">
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className="max-w-xs max-h-48 mx-auto"
-              />
-            </div>
-          )}
+          </label>          
+
 
           <label 
             className="my-2 relative inline-flex items-center bg-[#E5E5E5] text-black opacity-40 rounded-md px-4 py-2 cursor-pointer hover:bg-primary-dark"
@@ -84,11 +133,10 @@ const ImageUploadModal = ({ isOpen, closeModal }) => {
           </label>
           </div>
         
-        
         </div>
         <div className="flex justify-end my-2">
           <button
-            className="px-4 py-2 border text-black rounded hover:bg-blue-600"
+            className="px-4 py-2 mr-2 border text-black rounded hover:bg-blue-600"
             onClick={closeModal}
           >
             Cancel

@@ -154,18 +154,28 @@ const NewDataBA = () => {
 
             <div className='mb-4.5 w-54 h-0'>
             <label className="mb-2.5 block text-black dark:text-white font-medium text-sm">
-                    Unggah Gambar
+                    Unggah Gambar Sebelum
                 </label>
                 <div
+                  id='fileUpload'
+                  className='w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary'
+                  onClick={openModal}
+                >
+                  <input
+                    type="file"
+                    className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primar"
+                  />
+              </div>
+                {/* <div
                     id="FileUpload"
                     className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
                     onClick={openModal}
                   >
-                    {/* <input
+                    <input
                       type="file"
                       accept="image/*"
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
-                    /> */}
+                    />
                     <div className="flex flex-col items-center justify-center space-y-3">
                       <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                         <svg
@@ -201,7 +211,7 @@ const NewDataBA = () => {
                       <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
                       <p>(max, 800 X 800px)</p>
                     </div>
-                  </div>
+                  </div> */}
             </div>   
             <ImageUploadModal isOpen={isModalOpen} closeModal={closeModal} />
         </div>
@@ -260,8 +270,22 @@ const NewDataBA = () => {
               </div>
             </div>
 
-            <div className='mb-4.5 w-54'></div>
-
+            <div className='mb-4.5 w-54 h-0'>
+            <label className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+                    Unggah Gambar Setelah
+                </label>
+                <div
+                  id='fileUpload'
+                  className='w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary'
+                  onClick={openModal}
+                >
+                  <input
+                    type="file"
+                    className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primar"
+                  />
+              </div>
+            </div>   
+            <ImageUploadModal isOpen={isModalOpen} closeModal={closeModal} />
         </div>
 
         <div className='flex grid-cols-2 mt-3 justify-between'>

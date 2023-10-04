@@ -6,9 +6,15 @@ interface ImageUploadModalProps {
 }
 
 const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal }) => {
-  const [selectedImage1, setSelectedImage1] = useState("");
+  // const [selectedImage1, setSelectedImage1] = useState("");
 
+  // const [selectedImage2, setSelectedImage2] = useState("");
+
+  const [selectedImage1, setSelectedImage1] = useState("");
+  
   const [selectedImage2, setSelectedImage2] = useState("");
+
+  const [showUploadButton, setShowUploadButton] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>, imageNumber: number) => {
     if (e.target.files) {
@@ -23,6 +29,7 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal 
       }
     }
   };
+    
   
 
   const handleUpload = () => {
@@ -36,12 +43,16 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal 
       } transition-opacity duration-300 ease-in-out`}
     >
       <div className="bg-white w-96 p-6 rounded-lg shadow-lg">
-        <h2 className="text-lg mb-2 text-black font-medium">Unggah Gambar</h2>
+        <h2 className="text-lg mb-2 text-black font-medium">Unggah Gambar Sebelum</h2>
         <div className="h-px mb-2 border border-black" />
         <div className="flex justify-between">
             <div className="shadow border-lg m-2 w-1/2" >
               {selectedImage1 && (
-                <div className="border border-black p-5 h-full ">
+                <div 
+                  className="border border-black p-5 h-full "
+                  onMouseEnter={() => setShowUploadButton(true)}
+                  onMouseLeave={() => setShowUploadButton(false)}
+                  >
                   <img
                     src={selectedImage1}
                     alt="Selected 1"
@@ -49,29 +60,8 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal 
                   />
                 </div>
               )}
-              {!selectedImage1 && (
-                <div className="border border-black p-5 h-full flex items-center justify-center">
-                  <span>Sebelum</span>
-                </div>
-              )}
             </div>
 
-            <div className="shadow border-lg m-2 w-1/2">
-              {selectedImage2 && (
-                <div className="border border-black p-5 h-full">
-                  <img
-                    src={selectedImage2}
-                    alt="Selected 2"
-                    className="max-w-full max-h-full mx-auto"
-                  />
-                </div>
-              )}
-              {!selectedImage2 && (
-                <div className="border border-black p-5 h-full flex items-center justify-center">
-                  <span>Sesudah</span>
-                </div>
-              )}
-            </div>
 
           <div className="flex flex-col">
           <label className="my-2 relative inline-flex items-center bg-[#E5E5E5] text-black opacity-40 rounded-md px-4 py-2 cursor-pointer hover:bg-primary-dark">
@@ -80,12 +70,6 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal 
               accept="image/*"
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               onChange={(e) => handleImageChange(e, 1)}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              onChange={(e) => handleImageChange(e, 2)}
             />
             <svg
             xmlns="http://www.w3.org/2000/svg"

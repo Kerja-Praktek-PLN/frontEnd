@@ -17,6 +17,12 @@ const NewDataBA = () => {
   const handleFileInputChange = () => {
     // smbrng dlu
   }
+
+  const handleFileUpload = (event: any) => {
+    // Upload the image here.
+
+    closeModal();
+  };
   return (
     <>
     <Breadcrumb pageName='NewDataBA' />
@@ -164,11 +170,12 @@ const NewDataBA = () => {
                 <div
                   id='fileUpload'
                   className='w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary'
-                  onClick={openModal}
+                  onClick={() => setModalOpen(true)}
                 >
                   <input
                     type="file"
-                    className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primar"
+                    className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    onChange={handleFileUpload}
                   />
               </div>
               <ImageUploadModal isOpen={isModalOpen} closeModal={closeModal} />

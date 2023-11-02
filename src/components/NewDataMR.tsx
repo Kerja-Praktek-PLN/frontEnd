@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import Breadcrumb from './Breadcrumb';
 
 const NewDataMR = () => {
@@ -68,6 +68,7 @@ const NewDataMR = () => {
                   <option value="">Type your subject</option>
                   <option value="">Sudah Pangkas</option>
                   <option value="">Sudah Tebang</option>
+                  <option value="">Belum Ditindak</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg

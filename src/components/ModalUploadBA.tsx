@@ -69,7 +69,8 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, closeModal 
 
 
           <div className="flex flex-col">
-          <label className="my-2 relative inline-flex items-center bg-[#E5E5E5] text-black opacity-40 rounded-md px-4 py-2 cursor-pointer hover:bg-primary-dark">
+          <label 
+            className="my-2 relative inline-flex items-center bg-[#E5E5E5] text-black opacity-40 rounded-md px-4 py-2 cursor-pointer hover:bg-primary-dark">
             <input 
               type="file"
               accept="image/*"

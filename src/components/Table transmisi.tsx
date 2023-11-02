@@ -1,6 +1,8 @@
 import { useState } from "react";
 import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
+import { dataTransmisi } from "../Data/dataTransmisi";
+import Transmisi from "../pages/MasterData/Transmisi";
 
 type EditModalProps = {
   isOpen: boolean;
@@ -24,12 +26,12 @@ const Tabletransmisi = () => {
     setEditedlink(link);
   };
 
-  const handleEdit =() => {
+  const handleEditData = () => {
     setName(name);
     setLink(link);
-
+  
     setEditModalOpen(false);
-  };  
+  }; 
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -77,9 +79,11 @@ const Tabletransmisi = () => {
           <p className="text-xs text-black dark:text-white sm:block">1</p>
         </div>
 
-        <div className="p-1.5 items-center xl:p-2.5 border-r col-span-3">
-          <p className="text-xs text-black dark:text-white">Transmisi A</p>
-        </div>
+        {dataTransmisi.map((item, index) => (
+          <div key={index} className="p-1.5 items-center xl-p-2.5 border-r col-span-3">
+            <p className="text-xs text-black dark:text-white">{item.name}</p>
+          </div>
+        ))}
 
         <div className="p-0.5 text-center xl:p-1.5 border-r col-span-3">
           <a
@@ -88,7 +92,7 @@ const Tabletransmisi = () => {
               rel="noopener noreferrer"
               className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline underline"
             >
-              docs.google.com/spreadsheets/
+              {dataTransmisi.link}
             </a>
         </div>
 
@@ -442,10 +446,10 @@ const Tabletransmisi = () => {
         </div>
         {/* Render the EditModal */}
         <EditModal
-          isOpen={isEditModalOpen}
-          closeModal={() => setEditModalOpen(false)}
-          handleEdit={handleEdit}
-        />
+            isOpen={isEditModalOpen}
+            closeModal={() => setEditModalOpen(false)}
+            handleEditData={handleEditData}
+          />
 
         {/* Render the DeleteConfirmationModal */}
         <DeleteConfirmationModal

@@ -72,7 +72,7 @@ const Tabletransmisi = () => {
               Action
             </h5>
           </div>
-      </div>
+        </div>
 
       <div className="grid grid-cols-8  border sm:grid-cols-12">
         <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
@@ -80,25 +80,28 @@ const Tabletransmisi = () => {
         </div>
 
         {dataTransmisi.map((item, index) => (
-          <div key={index} className="p-1.5 items-center xl-p-2.5 border-r col-span-3">
+          <div key={index} className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">
             <p className="text-xs text-black dark:text-white">{item.name}</p>
           </div>
         ))}
-
-        <div className="p-0.5 text-center xl:p-1.5 border-r col-span-3">
+        
+      {dataTransmisi.map((item, index) => (
+        <div key={index} className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
           <a
               href="https://docs.google.com/spreadsheets/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline underline"
+              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline  "
             >
-              {dataTransmisi.link}
+              {item.link}
             </a>
         </div>
+        ))}
 
         <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
           <p className="text-xs text-black dark:text-white">2023/29/20;20:30</p>
         </div>
+        
         <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 col-span-2">
           <div className="flex items-center space-x-2 ">
                   <button 

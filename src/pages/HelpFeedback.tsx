@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
+import { ChangeEvent } from "react";
 
 
 const HelpFeedback = () => {
@@ -11,7 +12,7 @@ const HelpFeedback = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -19,7 +20,7 @@ const HelpFeedback = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     // Perform submission logic here
     setIsSubmitted(true);
@@ -120,7 +121,10 @@ const HelpFeedback = () => {
                 Thank you, your request has been recorded!
               </p>
               <button
-                onClick={closeModal}
+                onClick={() => {
+                  closeModal();
+                  window.location.href = "/home";
+                }}
                 className="bg-[#469AA7] text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300"
               >
                 Close

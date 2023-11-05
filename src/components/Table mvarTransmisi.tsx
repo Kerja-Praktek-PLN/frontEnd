@@ -5,7 +5,7 @@ import DeleteConfirmationModal from "./ModalDelete";
 type EditModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  handleEdit: (data: { name: string; link: string }) => void;
+  handleEditData: (data: { name: string; link: string }) => void;
 };
 
 const Tablevartransmisi = () => {
@@ -24,7 +24,7 @@ const Tablevartransmisi = () => {
     setEditedlink(link);
   };
 
-  const handleEdit =() => {
+  const handleEditData =() => {
     setName(name);
     setLink(link);
 
@@ -444,7 +444,7 @@ const Tablevartransmisi = () => {
         <EditModal
           isOpen={isEditModalOpen}
           closeModal={() => setEditModalOpen(false)}
-          handleEdit={handleEdit}
+          handleEditData={handleEditData}
         />
 
         {/* Render the DeleteConfirmationModal */}

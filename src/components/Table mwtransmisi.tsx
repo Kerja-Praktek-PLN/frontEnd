@@ -24,7 +24,7 @@ const Tablemwtransmisi = () => {
     setEditedlink(link);
   };
 
-  const handleEdit =() => {
+  const handleEditData =() => {
     setName(name);
     setLink(link);
 
@@ -444,7 +444,7 @@ const Tablemwtransmisi = () => {
         <EditModal
           isOpen={isEditModalOpen}
           closeModal={() => setEditModalOpen(false)}
-          handleEdit={handleEdit}
+          handleEditData={handleEditData}
         />
 
         {/* Render the DeleteConfirmationModal */}

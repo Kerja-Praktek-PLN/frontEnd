@@ -1,6 +1,6 @@
-export const dataTransmisi = [
+export const dataMVarTransmisi = [
     {
-      name: "Transmisi A",
+      name: "Transmisi Ac",
       link: "docs.google.com/spreadsheets/ddsdscdcddc",
     },
   ];

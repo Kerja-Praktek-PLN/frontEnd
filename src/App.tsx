@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 import ECommerce from './pages/Dashboard/ECommerce';
@@ -27,6 +27,7 @@ function App() {
     <Toaster position='top-right' reverseOrder={false} containerClassName='overflow-auto'/>
   
       <Routes>
+        <Route index element={<SignIn />} />
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/auth/Forgetpass" element={<Forgetpass />} />

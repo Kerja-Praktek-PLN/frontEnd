@@ -1,6 +1,6 @@
-export const dataTransmisi = [
+export const dataMwTransmisi = [
     {
-      name: "Transmisi A",
+      name: "Transmisi Av",
       link: "docs.google.com/spreadsheets/ddsdscdcddc",
     },
   ];

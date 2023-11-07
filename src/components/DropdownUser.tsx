@@ -45,9 +45,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-white dark:text-white">
-            Thomas Anree
+            Indra Budi
           </span>
-          <span className="block text-xs text-black">UX Designer</span>
+          <span className="block text-xs text-black"></span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

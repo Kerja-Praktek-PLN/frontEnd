@@ -27,7 +27,7 @@ const TableMonitoring = () => {
     setEditedlink(link);
   };
 
-  const handleEdit =() => {
+  const handleEditData =() => {
     setName(name);
     setLink(link);
 
@@ -216,7 +216,7 @@ const TableMonitoring = () => {
         <EditModal
           isOpen={isEditModalOpen}
           closeModal={() => setEditModalOpen(false)}
-          handleEdit={handleEdit}
+          handleEditData={handleEditData}
         />
 
         {/* Render the DeleteConfirmationModal */}

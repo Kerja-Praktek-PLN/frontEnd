@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 
+const Authentication = lazy(() => import('../pages/Authentication/SignIn'));
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
 const FormElements = lazy(() => import('../pages/Form/FormElements'));
@@ -23,6 +24,11 @@ const BeritaAcara = lazy (() => import('../pages/BeritaAcara'));
 const NewDataBA = lazy (() => import('../components/NewDataBA'));
 
 const coreRoutes = [
+  {
+    path: '/Authentication',
+    title: 'Authentication',
+    component: Authentication,
+  },
   {
     path: '/Home',
     title: 'Home',

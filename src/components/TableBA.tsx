@@ -26,7 +26,7 @@ const TableBA = () => {
     setEditedlink(link);
   };
 
-  const handleEdit =() => {
+  const handleEditData =() => {
     setName(name);
     setLink(link);
 

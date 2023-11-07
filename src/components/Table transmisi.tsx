@@ -75,9 +75,11 @@ const Tabletransmisi = () => {
         </div>
 
       <div className="grid grid-cols-8  border sm:grid-cols-12">
-        <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-          <p className="text-xs text-black dark:text-white sm:block">1</p>
+        {dataTransmisi.map((item, index) => (
+        <div key={index} className="hidden sm:block p-1.5 xl:p-2.5 border-r">
+          <p className="text-xs text-black dark:text-white sm:block">{item.no}</p>
         </div>
+        ))}
 
         {dataTransmisi.map((item, index) => (
           <div key={index} className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">

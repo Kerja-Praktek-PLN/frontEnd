@@ -88,16 +88,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               MENU
             </h3>
 
-            <ul className="mb-6 flex flex-col gap-1.5">
-              {/* <!-- Menu Item Dashboard --> */}
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === '/' || pathname.includes('dashboard')
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
+            <ul className="mb-6 flex flex-col gap-1.5">              
                        {/* <!-- Menu Item Home --> */}
                       <li>
                         <NavLink
@@ -135,11 +126,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           Home
                         </NavLink>
                       </li>
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
-              {/* <!-- Menu Item Dashboard --> */}
 
               {/* <!-- Menu Item Report --> */}
               <li>

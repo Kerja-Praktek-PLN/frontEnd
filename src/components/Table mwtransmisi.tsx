@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
+import { dataMwTransmisi } from "../Data/dataMwTransmisi";
 
 type EditModalProps = {
   isOpen: boolean;
@@ -73,24 +74,31 @@ const Tablemwtransmisi = () => {
       </div>
 
       <div className="grid grid-cols-8  border sm:grid-cols-12">
-        <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-          <p className="text-xs text-black dark:text-white sm:block">1</p>
+      
+      {dataMwTransmisi.map((item, index) => (
+        <div  key={index} className="hidden sm:block p-1.5 xl:p-2.5 border-r">
+          <p className="text-xs text-black dark:text-white sm:block">{item.no}</p>
         </div>
+        ))}
 
-        <div className="p-1.5 items-center xl:p-2.5 border-r col-span-3">
-          <p className="text-xs text-black dark:text-white">Transmisi contoh</p>
+      {dataMwTransmisi.map((item, index) => (
+        <div key={index} className="p-1.5 items-center xl:p-2.5 border-r col-span-3 flex">
+          <p className="text-xs text-black dark:text-white">{item.name}</p>
         </div>
+        ))}
 
-        <div className="p-0.5 text-center xl:p-1.5 border-r col-span-3">
+        {dataMwTransmisi.map((item, index) => (
+        <div key={index} className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
           <a
               href="https://docs.google.com/spreadsheets/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline underline"
+              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline"
             >
-              docs.google.com/spreadsheets/
+              {item.link}
             </a>
         </div>
+        ))}
 
         <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
           <p className="text-xs text-black dark:text-white">2023/29/20;20:30</p>

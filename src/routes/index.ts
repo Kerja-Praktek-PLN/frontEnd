@@ -3,7 +3,6 @@ import { lazy } from 'react';
 const Authentication = lazy(() => import('../pages/Authentication/SignIn'));
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Profile = lazy(() => import('../pages/Profile'));
-const ECommerce = lazy(() => import('../pages/Dashboard/ECommerce'));
 const Home = lazy(() => import('../pages/Dashboard/Home'));
 const Report = lazy(() => import('../pages/Report'));
 const MvarTransmisi = lazy (() => import('../pages/MasterData/MvarTransmisi'));
@@ -26,11 +25,6 @@ const coreRoutes = [
     path: '/Home',
     title: 'Home',
     component: Home,
-  },
-  {
-    path: '/Ecommerce',
-    title: 'Ecommerce',
-    component: ECommerce,
   },
   {
     path: '/Report',

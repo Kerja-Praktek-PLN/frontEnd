@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { APIURL } from '../../../constant';
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -7,19 +6,20 @@ const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const loginHandler = async (email: string, password: string) => {
+  const loginHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("test");
     try {
-      const response = await axios.post(`${APIURL}/login`, {
-        email: email,
-        password: password
-      });
-      console.log("Response:", response.data);
-      // Lakukan sesuatu setelah login berhasil
+        const data = await axios.post('http://localhost:5000/login', {
+            email,
+            password
+        });
+        console.log(data);
+        window.location.href = "/home";
     } catch (error) {
-      console.error("Error:", error);
-      // Lakukan sesuatu jika login gagal
+        console.log(error);
     }
-  };
+};
 
   return (
     <>
@@ -123,11 +123,9 @@ const SignIn: React.FC = () => {
                   <button
                     type="submit"
                     value="Masuk"
-                    onClick={() => {
-                      loginHandler(email, password);
-                    }}
-                      className="w-full cursor-pointer rounded-lg bg-[#9BDBE3] p-4 text-[#2B2B2B] font-bold transition hover:bg-opacity-90 break-words]"
-                    >Login </button>
+                    onClick={(e) => loginHandler(e)}
+                    className="w-full cursor-pointer rounded-lg bg-[#9BDBE3] p-4 text-[#2B2B2B] font-bold transition hover:bg-opacity-90 break-words"
+                  >Login </button>
                   </div>
 
                   <div className="mt-6 text-center">

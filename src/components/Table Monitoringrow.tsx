@@ -12,7 +12,7 @@ type EditModalProps = {
   };
 
 const TableMonitoring = () => {
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [name, setName] = useState ('');
   const [link, setLink] = useState ('');

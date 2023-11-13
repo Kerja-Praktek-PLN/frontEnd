@@ -31,7 +31,6 @@ const SignIn: React.FC = () => {
       >
       <div className="w-full dark:border-strokedark xl:w-1/2 mx-auto max-w-screen-sm bg-white m-15">
             <div className="flex w-full p-5 item-center">
-                {/* <span className="mb-1.5 block font-medium text-black">Selamat Datang</span> */}
                 <img src="/src/images/Logo_PLN.png" alt="background" className='h-16'></img>
                 <h2 className="text-2xl text-black dark:text-white sm:text-title-xl2 font-bold mx-auto">
                   Selamat Datang

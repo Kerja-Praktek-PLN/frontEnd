@@ -49,7 +49,7 @@ const TableMonitoring = () => {
         <div className="flex flex-col px-20 pb-10 overflow-x-auto">
          <div className="grid grid-cols-8 rounded-sm bg-gray-2 border dark:bg-meta-4 sm:grid-cols-12">
           <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-            <h5 className="text-xs font-medium font-bold xsm:text-sm">
+            <h5 className="text-xs font-medium font-bold xsm:text-sm flex justify-center items-center">
               No.
             </h5>
           </div>

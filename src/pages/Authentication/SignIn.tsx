@@ -5,6 +5,7 @@ import axios from 'axios';
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const SignIn: React.FC = () => {
         window.location.href = "/home";
     } catch (error) {
         console.log(error);
+        setError("Incorrect email or password. Please try again.");
     }
 };
 
@@ -107,6 +109,12 @@ const SignIn: React.FC = () => {
                           </g>
                         </svg>
                       </span>
+                    </div>
+                  </div>
+  
+                  <div className="item-center flex justify-center text-danger">
+                    <div className="mb-6 text-red-500 flex items-center">
+                      {error && <p>{error}</p>}
                     </div>
                   </div>
 

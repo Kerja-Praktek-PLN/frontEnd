@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import UserOne from '../images/user/user-01.png';
 
@@ -35,6 +36,19 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+      // Add your logout logic, such as clearing session, etc.
+      console.log('User logged out');
+  
+      // Example: Clear session (you might want to use your authentication library logic)
+      sessionStorage.removeItem('userToken');
+  
+      // Redirect to home page
+      navigate('/');
+  };
+
   return (
     <div className="relative">
       <Link
@@ -45,7 +59,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-white dark:text-white">
-            Indra Budi
+            Thoriq
           </span>
           <span className="block text-xs text-black"></span>
         </span>
@@ -108,7 +122,7 @@ const DropdownUser = () => {
               My Profile
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="#"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -128,8 +142,8 @@ const DropdownUser = () => {
               </svg>
               My Contacts
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               to="/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -153,9 +167,11 @@ const DropdownUser = () => {
               </svg>
               Account Settings
             </Link>
-          </li>
+          </li> */}
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button 
+        onClick={handleLogout}
+        className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"

@@ -33,7 +33,7 @@ const NewDataMR = () => {
     // You can add further logic to handle the submission of this data
   };
 
-
+  const [selectedRoute, setSelectedRoute] = useState('');
 
   return (
     <>
@@ -43,7 +43,7 @@ const NewDataMR = () => {
       <div className='p-5'>
         <div className='text-black font-bold text-xl'>New Data</div>
         <div className='w-20 h-px border border-black my-2'/>
-        <div className='text-black font-medium text-lg'>Rute Transmisi : </div>
+        <div className='text-black font-medium text-lg'>Rute Transmisi : {selectedRoute}</div>
       </div>
       <div className='px-7 pb-7'>
         <div className='flex grid-cols-3 justify-between w-full'>

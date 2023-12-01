@@ -3,6 +3,8 @@ import Breadcrumb from "../components/Breadcrumb";
 import TableBA from "../components/TableBA";
 import { Link } from "react-router-dom";
 
+
+
 const BeritaAcara = () => {
     return (
         <>

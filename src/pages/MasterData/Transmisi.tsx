@@ -3,11 +3,19 @@ import Tabletransmisi from "../../components/Table transmisi";
 import { useState } from "react";
 
 
+type DataType = {
+  id: number;
+  name: string;
+  link: string;
+  lastUpdate: Date;
+};
+
 const Transmisi = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DataType[]>([]);
+  const [lastUpdate, setLastUpdate] =  useState(getCurrentTime());
 
   const openModal = () => {
     setModalOpen(true);
@@ -22,18 +30,40 @@ const Transmisi = () => {
       return;
     }
 
-  const newData = {
+  const newData: DataType = {
+    id: data.length + 1,
     name,
     link,
+    lastUpdate: getCurrentTime(),
   };
 
-  // setData((prevData) => [...prevData, newData]);
+  setData((prevData) => [...prevData, newData]);
+  
 
   setName('');
   setLink('');
-
+  setLastUpdate(getCurrentTime());
   closeModal();
+
+  notifyDataChange();
 }
+
+const updateData = (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date }>) => {
+  setData(newData);
+};
+
+
+  const [dataChangeCount, setDataChangeCount] = useState(0);
+
+  const notifyDataChange = () => {
+    setDataChangeCount((prevCount) => prevCount + 1);
+  };
+
+  
+  function getCurrentTime(): Date {
+    return new Date();
+  }
+  
 
     return (
       <>
@@ -78,7 +108,7 @@ const Transmisi = () => {
                     New Data
                   </button>
               </div>
-            <Tabletransmisi />
+            <Tabletransmisi data={data} updateData={updateData} />
             <div className="flex justify-end pr-5 pb-5">
               <button className=" text-black py-2 px-4 rounded mr-2 hover:bg-primary-dark transition duration-300 text-xs">
                 Previous

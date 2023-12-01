@@ -1,48 +1,86 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
-import { dataTransmisi } from "../Data/dataTransmisi";
-import Transmisi from "../pages/MasterData/Transmisi";
+import { format } from 'date-fns';
 
-type EditModalProps = {
-  isOpen: boolean;
-  closeModal: () => void;
-  handleEdit: (data: { name: string; link: string }) => void;
+type TabletransmisiProps = {
+  data: Array<{ id: number; name: string; link: string, lastUpdate: Date  }>
+  updateData: (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date }>) => void;
 };
 
-const Tabletransmisi = () => {
+
+const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => {
+  const [editItemId, setEditItemId] = useState<number | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [name, setName] = useState ('');
   const [link, setLink] = useState ('');
-  
   const [editedName, setEditedName] = useState('');
   const [editedLink, setEditedlink] = useState('');
-
-  const openEditModal = () => {
-    setEditModalOpen(true);
-
-    setEditedName(name);
-    setEditedlink(link);
-  };
-
-  const handleEditData = () => {
-    setName(name);
-    setLink(link);
+  const [isEditing, setIsEditing] = useState(false);
+  // const [lastUpdate, setLastUpdate] = useState(getCurrentTime());
+  const [dataChangeCount, setDataChangeCount] = useState(0);
+  const [tableData, setTableData] = useState(data);
   
+
+  const openEditModal = (id: number, name: string, link: string) => {
+    if (id !== undefined) {
+      setEditItemId(Number(id));
+      setEditModalOpen(true);
+      setEditedName(name);
+      setEditedlink(link);
+      setName(name);
+      setLink(link);
+      setIsEditing(true);
+      updateData;
+    } else {
+      // Handle the case where id is undefined
+      console.error("Cannot open edit modal with undefined id");
+    } 
+  };
+  
+
+  const handleEditData = (id: number, name: string, link: string, lastUpdate: Date) => {
+    console.log('Before update:', tableData);
+  
+    // Create a copy of the current tableData array
+    const updatedData = tableData.map((item) =>
+      item.id === id ? { ...item, name, link, lastUpdate } : item
+    );
+  
+    console.log('After update:', updatedData);
+  
+    // Use the state updater function to update the state with the new array
+    updateData(updatedData); // Make sure to pass an empty array as the first argument
+  
+    // Close the edit modal and reset state
     setEditModalOpen(false);
-  }; 
+    setIsEditing(false);
+  
+    // Log the current state after updating
+    console.log('Current state:', { id, name, link, lastUpdate });
+  };  
+     
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true);
   };
 
-  const handleDelete = () => {
-    setName('');
-    setLink('');
+  const handleDelete = (id : number) => {
+    // Handle delete logic and update the data array
+    const updatedData = tableData.filter(
+      (item) => !(item.id == id)
+    );
+    // Update tableData using setTableData
+    updateData(updatedData);
 
     setDeleteModalOpen(false);
   };
+
+  useEffect(() => {
+    setTableData(data);
+  });
+
 
   return (
       <div className="flex flex-col px-20 pb-10 overflow-x-auto">
@@ -74,23 +112,19 @@ const Tabletransmisi = () => {
           </div>
         </div>
 
-      <div className="grid grid-cols-8  border sm:grid-cols-12">
-        {dataTransmisi.map((item, index) => (
-        <div key={index} className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-          <p className="text-xs text-black dark:text-white sm:block">{item.no}</p>
+      {tableData.map((item, index) => (
+        <div key={index} className="grid grid-cols-8  border sm:grid-cols-12">
+        <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
+          <p className="text-xs text-black dark:text-white sm:block">{item.id}</p>
         </div>
-        ))}
 
-        {dataTransmisi.map((item, index) => (
-          <div key={index} className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">
+          <div className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">
             <p className="text-xs text-black dark:text-white">{item.name}</p>
           </div>
-        ))}
         
-      {dataTransmisi.map((item, index) => (
-        <div key={index} className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
+        <div className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
           <a
-              href="https://docs.google.com/spreadsheets/"
+              href="item.link"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline  "
@@ -98,17 +132,16 @@ const Tabletransmisi = () => {
               {item.link}
             </a>
         </div>
-        ))}
 
-        <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
-          <p className="text-xs text-black dark:text-white">2023/29/20;20:30</p>
-        </div>
+          <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
+            <p className="text-xs text-black dark:text-white">{item.lastUpdate.toLocaleString()}</p>
+          </div>
         
         <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 col-span-2">
           <div className="flex items-center space-x-2 ">
                   <button 
                     className="hover:text-primary bg-[#42AEC3] p-0.5 rounded-sm shadow border"
-                    onClick={openEditModal}
+                    onClick={() => openEditModal(item.id, item.name, item.link)}
                   >
                     <svg
                       className="fill-current"
@@ -155,13 +188,15 @@ const Tabletransmisi = () => {
                     </svg>
                   </button>
                 </div>
-          </div>
-        </div>
-        {/* Render the EditModal */}
-        <EditModal
+          </div>     
+ {/* Render the EditModal */}
+ <EditModal
             isOpen={isEditModalOpen}
             closeModal={() => setEditModalOpen(false)}
             handleEditData={handleEditData}
+            initialId={item.id}
+            initialName={editedName}
+            initialLink={editedLink}          
           />
 
         {/* Render the DeleteConfirmationModal */}
@@ -169,7 +204,11 @@ const Tabletransmisi = () => {
           isOpen={isDeleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
           handleDelete={handleDelete}
+          id = {item.id}
         />
+        </div>
+        ))}
+       
       </div>
   );
 };

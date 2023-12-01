@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 type DeleteModalProps = {
     isOpen: boolean;
     closeModal: () => void;
-    handleDelete: () => void; // Corrected the type to accept no arguments
+    handleDelete: (id:number) => void;
+    id : number; // Corrected the type to accept no arguments
   };
   
-  const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({ isOpen, closeModal, handleDelete }) => {
+  const DeleteConfirmationModal: React.FC<DeleteModalProps> = ({ isOpen, closeModal, handleDelete, id }) => {
     const handleDeleteClick = () => {
       // Perform the delete action
-      handleDelete();
+      handleDelete(id);
   
       // Close the modal
       closeModal();

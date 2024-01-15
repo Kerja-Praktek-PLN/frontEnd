@@ -1,36 +1,57 @@
 // import React from 'react';
+import { parse } from 'date-fns';
 import Breadcrumb from './Breadcrumb';
 import { useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
+import { BsCloudFog } from 'react-icons/bs';
 
 const NewDataMR = () => {
 
   const [formData, setFormData] = useState({
     tanggal: '',
-    status: '',
-    tindakLanjut: '',
-    namaPIC: '',
-    jenisPohon: '',
-    noTower: '',
+    status_tegakan: '',
+    nama_PIC: '',
+    jenis_pohon: '',
+    nomor_tower: '',
     jalur: '',
-    jumlahTegakan: '',
-    jarakKonduktor: '',
+    jumlah_tegakan: '',
+    jarak_pohon_ke_konduktor: '',
+    tindak_lanjut: ''
   });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-  
-    const selectedValue = e.target.type === 'select-one' ? e.target.value : value;
-  
-    setFormData({ ...formData, [name]: selectedValue });
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = event.target;
+    var parsedValue = value
+    if(type === 'number') parsedValue = parseInt(value)
+    if(name === 'jarak_pohon_ke_konduktor') parsedValue = parseFloat(value)
+    if(name === 'tanggal') parsedValue = parseDate(value)
+    console.log("parsedValue")
+    console.log(parsedValue)
+    setFormData((prev)=>{
+      return {
+        ...prev,
+        [name]: parsedValue, 
+      }
+    });
   };
 
+  const parseDate = (isoDate: any) => {
+    const date = new Date(isoDate)
+    return date.toISOString().split('T')[0]
+  }
   
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you can use the formData object to submit or perform actions with the entered data
-    console.log('Form Data:', formData);
-    // You can add further logic to handle the submission of this data
+    try {
+      console.log('Form Data:', formData);
+      const result = await axios.post(`http://localhost:5000/row`, formData)
+      console.log(result)
+    } catch (error) {
+      console.log("error") 
+      console.log(error)
+    }
   };
 
   const [selectedRoute, setSelectedRoute] = useState('');
@@ -43,7 +64,18 @@ const NewDataMR = () => {
       <div className='p-5'>
         <div className='text-black font-bold text-xl'>New Data</div>
         <div className='w-20 h-px border border-black my-2'/>
-        <div className='text-black font-medium text-lg'>Rute Transmisi : {selectedRoute}</div>
+        <div className='text-black font-medium text-lg'>Rute Transmisi : {selectedRoute} 
+        <select onChange={handleInputChange} name="rute_transmisi" className="shadow text-sm relative z-20 w-1/3 appearance-none rounded border border-stroke bg-transparent py-2 px-4 mx-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+          <option value="" selected disabled>Rute Transmisi</option>
+          <option value="Tello - Mandai">Tello - Mandai</option>
+          <option value="Mandai - Pangkep">Mandai - Pangkep</option>
+          <option value="Maros - DayaBaru">Maros - DayaBaru</option>
+          <option value="Bosowa - Incomer ">Bosowa - Incomer </option>
+          <option value="Pangkep - Tonasa">Pangkep - Tonasa</option>
+          <option value="Pangkep - Tello">Pangkep - Tello</option>
+          <option value="Balusu - Maros">Balusu - Maros</option>
+        </select>
+        </div>
       </div>
       <div className='px-7 pb-7'>
         <div className='flex grid-cols-3 justify-between w-full'>
@@ -63,14 +95,14 @@ const NewDataMR = () => {
           </div>
 
           <div className="mb-4.5 w-54">
-              <label htmlFor="status" className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+              <label htmlFor="status_tegakan" className="mb-2.5 block text-black dark:text-white font-medium text-sm">
                 Status
               </label>
               <div 
               className="relative z-20 bg-transparent dark:bg-form-input">
                 <select 
-                name="status"
-                value={formData.status}
+                name="status_tegakan"
+                value={formData.status_tegakan}
                 onChange={handleInputChange}
                 className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                   <option value="default">Type your subject</option>
@@ -108,14 +140,14 @@ const NewDataMR = () => {
               <div 
               className="relative z-20 bg-transparent dark:bg-form-input">
                 <select 
-                name='tindakLanjut'
+                name='tindak_lanjut'
                 value={formData.tindakLanjut}
                 onChange={handleInputChange}
                 className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                   <option value="default">Type your subject</option>
-                  <option value="Sudah Pangkas">Sudah Pangkas</option>
-                  <option value="Sudah Tebang">Sudah Tebang</option>
-                  <option value="Belum Ditindak">Belum Ditindak</option>
+                  <option value="sudah pangkas">Sudah Pangkas</option>
+                  <option value="sudah tebang">Sudah Tebang</option>
+                  <option value="selum ditindak">Belum Ditindak</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -147,8 +179,8 @@ const NewDataMR = () => {
               </label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
                 <select 
-                name='namaPIC'
-                value={formData.namaPIC}
+                name='nama_PIC'
+                value={formData.nama_PIC}
                 onChange={handleInputChange}
                 className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                   <option value="default">Type your subject</option>
@@ -184,13 +216,13 @@ const NewDataMR = () => {
             </div>
 
             <div className="mb-4.5 w-54">
-              <label htmlFor='jenisPohon' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+              <label htmlFor='jenis_pohon' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
                 Jenis Pohon
               </label>
               <input
                 type="text"
-                name='jenisPohon'
-                value={formData.jenisPohon}
+                name='jenis_pohon'
+                value={formData.jenis_pohon}
                 onChange={handleInputChange}
                 placeholder="Jenis Pohon"
                 className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -202,13 +234,13 @@ const NewDataMR = () => {
 
         <div className='flex grid-cols-2 mt-3 justify-between'>
         <div className="mb-4.5 w-54">
-            <label htmlFor='noTower' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+            <label htmlFor='nomor_tower' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
               No Tower
             </label>
             <input
-              type="text"
-              name='noTower'
-              value={formData.noTower}
+              type="number"
+              name='nomor_tower'
+              value={formData.nomor_tower}
               onChange={handleInputChange}
               placeholder="Input Nomor Tower"
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -226,8 +258,8 @@ const NewDataMR = () => {
                 onChange={handleInputChange}
                 className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                   <option value="default">Type your subject</option>
-                  <option value="Bawah Jalur">Bawah Jalur</option>
-                  <option value="Luar Jalur">Luar Jalur</option>
+                  <option value="bawah">Bawah Jalur</option>
+                  <option value="luar">Luar Jalur</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -257,13 +289,13 @@ const NewDataMR = () => {
 
         <div className='flex grid-cols-2 mt-3 justify-between'>
         <div className="mb-4.5 w-54">
-            <label htmlFor='jumlahTegakan' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+            <label htmlFor='jumlah_tegakan' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
               Jumlah Tegakan
             </label>
             <input
-              type="text"
-              name='jumlahTegakan'
-              value={formData.jumlahTegakan}
+              type="number"
+              name='jumlah_tegakan'
+              value={formData.jumlah_tegakan}
               onChange={handleInputChange}
               placeholder="Jumlah Tegakan"
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -271,13 +303,13 @@ const NewDataMR = () => {
           </div>
 
           <div className="mb-4.5 w-54">
-            <label htmlFor='jarakKonduktor' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+            <label htmlFor='jarak_pohon_ke_konduktor' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
               Jarak Pohon ke Konduktor
             </label>
             <input
-              type="text"
-              name="jarakKonduktor"
-              value={formData.jarakKonduktor}
+              type="number"
+              name="jarak_pohon_ke_konduktor"
+              value={formData.jarak_pohon_ke_konduktor}
               onChange={handleInputChange}
               placeholder="ex 3.6"
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"

@@ -1,47 +1,106 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
-import { dataMwTransmisi } from "../Data/dataMwTransmisi";
-
-type EditModalProps = {
-  isOpen: boolean;
-  closeModal: () => void;
-  handleEdit: (data: { name: string; link: string }) => void;
+import axios from "axios";
+type TabletransmisiProps = {
+  data: Array<{ id: number; name: string; link: string, lastUpdate: Date, nama_GI: string  }>
+  updateData: (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date, nama_GI: string }>) => void;
 };
 
-const Tablemwtransmisi = () => {
+
+const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => {
+  const [editItemId, setEditItemId] = useState<number | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [name, setName] = useState ('');
   const [link, setLink] = useState ('');
-  
+  const [namaGI, setNamaGI] = useState ('');
   const [editedName, setEditedName] = useState('');
   const [editedLink, setEditedlink] = useState('');
+  const [editedNamaGI, setEditedNamaGI] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  // const [lastUpdate, setLastUpdate] = useState(getCurrentTime());
+  const [dataChangeCount, setDataChangeCount] = useState(0);
+  const [tableData, setTableData] = useState(data);
+  
 
-  const openEditModal = () => {
-    setEditModalOpen(true);
-
-    setEditedName(name);
-    setEditedlink(link);
+  const openEditModal = (id: number, name: string, link: string, nama_GI: string) => {
+    if (id !== undefined) {
+      setEditItemId(Number(id));
+      setEditModalOpen(true);
+      setEditedName(name);
+      setEditedlink(link);
+      setEditedNamaGI(nama_GI);
+      setName(name);
+      setLink(link);
+      setNamaGI(nama_GI);
+      setIsEditing(true);
+      updateData;
+    } else {
+      // Handle the case where id is undefined
+      console.error("Cannot open edit modal with undefined id");
+    } 
   };
+  
 
-  const handleEditData =() => {
-    setName(name);
-    setLink(link);
-
+  const handleEditData = async (id: number, name: string, link: string, nama_GI: string, lastUpdate: Date) => {
+    console.log('Before update:', tableData);
+    console.log(name, link, nama_GI)
+  
+    // Create a copy of the current tableData array
+    const updatedData = tableData.map((item) =>
+      item.id === id ? { ...item, name, link, lastUpdate, nama_GI  } : item
+    );
+  
+    try {
+      const response = await axios.put(`http://localhost:5000/masterdata/${id}`, {name, link, nama_GI})
+      const result = response.data
+      console.log(result)
+    } catch (error) {
+      console.log("error")
+      console.log(error.message)
+    }
+    
+    // Use the state updater function to update the state with the new array
+    updateData(updatedData); // Make sure to pass an empty array as the first argument
+  
+    // Close the edit modal and reset state
     setEditModalOpen(false);
+    setIsEditing(false);
+  
   };  
+     
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true);
   };
 
-  const handleDelete = () => {
-    setName('');
-    setLink('');
+  const handleDelete = async (id : number) => {
+    // Handle delete logic and update the data array
+    const updatedData = tableData.filter(
+      (item) => !(item.id == id)
+    );
+
+    try {
+      const response = await axios.delete(`http://localhost:5000/masterdata/${id}`)
+      const result = response.data
+      console.log(result)
+    } catch (error) {
+      console.log("error")
+      console.log(error.message)
+    }
+    // Update tableData using setTableData
+    updateData(updatedData);
 
     setDeleteModalOpen(false);
   };
+
+  useEffect(() => {
+    setTableData(data);
+    console.log("tableData")
+    console.log(tableData)
+  });
+
 
   return (
       <div className="flex flex-col px-20 pb-10 overflow-x-auto">
@@ -71,43 +130,38 @@ const Tablemwtransmisi = () => {
               Action
             </h5>
           </div>
-      </div>
-
-      <div className="grid grid-cols-8  border sm:grid-cols-12">
-      
-      {dataMwTransmisi.map((item, index) => (
-        <div  key={index} className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-          <p className="text-xs text-black dark:text-white sm:block">{item.no}</p>
         </div>
-        ))}
 
-      {dataMwTransmisi.map((item, index) => (
-        <div key={index} className="p-1.5 items-center xl:p-2.5 border-r col-span-3 flex">
-          <p className="text-xs text-black dark:text-white">{item.name}</p>
+      {tableData.map((item, index) => (
+        <div key={index} className="grid grid-cols-8  border sm:grid-cols-12">
+        <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
+          <p className="text-xs text-black dark:text-white sm:block">{index+1}</p>
         </div>
-        ))}
 
-        {dataMwTransmisi.map((item, index) => (
-        <div key={index} className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
+          <div className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">
+            <p className="text-xs text-black dark:text-white">{item.name}</p>
+          </div>
+        
+        <div className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
           <a
-              href="https://docs.google.com/spreadsheets/"
+              href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline"
+              className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline  "
             >
               {item.link}
             </a>
         </div>
-        ))}
 
-        <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
-          <p className="text-xs text-black dark:text-white">2023/29/20;20:30</p>
-        </div>
+          <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
+            <p className="text-xs text-black dark:text-white">{item.last_update}</p>
+          </div>
+        
         <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 col-span-2">
           <div className="flex items-center space-x-2 ">
                   <button 
                     className="hover:text-primary bg-[#42AEC3] p-0.5 rounded-sm shadow border"
-                    onClick={openEditModal}
+                    onClick={() => openEditModal(item.id, item.name, item.link, item.nama_GI)}
                   >
                     <svg
                       className="fill-current"
@@ -154,21 +208,28 @@ const Tablemwtransmisi = () => {
                     </svg>
                   </button>
                 </div>
-          </div>
-        </div>
+          </div>     
         {/* Render the EditModal */}
-        <EditModal
-          isOpen={isEditModalOpen}
-          closeModal={() => setEditModalOpen(false)}
-          handleEditData={handleEditData}
-        />
+          <EditModal
+            isOpen={isEditModalOpen}
+            closeModal={() => setEditModalOpen(false)}
+            handleEditData={handleEditData}
+            initialId={item.id}
+            initialName={editedName}
+            initialLink={editedLink}          
+            initialNamaGI={editedNamaGI}         
+          />
 
         {/* Render the DeleteConfirmationModal */}
         <DeleteConfirmationModal
           isOpen={isDeleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
           handleDelete={handleDelete}
+          id = {item.id}
         />
+        </div>
+        ))}
+       
       </div>
   );
 };

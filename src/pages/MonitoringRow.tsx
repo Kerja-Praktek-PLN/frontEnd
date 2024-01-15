@@ -1,11 +1,40 @@
 import Breadcrumb from "../components/Breadcrumb";
-import EditdataMonitoring from "../components/EdtiDataMonitoring";
+import EditdataMonitoring from "../components/EditDataMonitoring";
 import deletedatamonitoring from "../components/DeleteDataMonitoring";
 import TableMonitoring from "../components/Table Monitoringrow";
 import { Link } from "react-router-dom"
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 
 const MonitoringRow = () => {
+    const [data,setData] = useState([{}])
+    const [filter, setFilter] = useState("")
+
+    const fetchData = async () => {
+      try {  
+        var query = new URL(`http://localhost:5000/row?rute_transmisi=${filter}`).href
+        const response = await axios.get(query)
+        console.log(query)
+        const result = response.data
+        console.log(result)
+        setData(prev => result)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    useEffect(() =>{
+      fetchData()
+      console.log("data")
+      console.log(data)
+    },[filter])
+
+    const runFilter = (e: any) =>{
+      setFilter(e.target.value)
+    }
+
+
     return (
       <>
       <Breadcrumb pageName="Monitoring Row" />
@@ -14,14 +43,14 @@ const MonitoringRow = () => {
        <div className="flex justify-between p-5">
         <div className="mb-4.5">
           <div className="relative z-20 bg-transparent dark:bg-form-input drop-shadow-lg w-54 bg-white rounded-sm">
-            <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-              <option value="">Tello - Mandai</option>
-              <option value="">Mandai - Pangkep</option>
-              <option value="">Maros - DayaBaru</option>
-              <option value="">Bosowa - Incomer </option>
-              <option value="">Pangkep - Tonasa</option>
-              <option value="">Pangkep - Tello</option>
-              <option value="">Balusu - Maros</option>
+            <select onChange={runFilter} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+              <option value="Tello - Mandai">Tello - Mandai</option>
+              <option value="Mandai - Pangkep">Mandai - Pangkep</option>
+              <option value="Maros - DayaBaru">Maros - DayaBaru</option>
+              <option value="Bosowa - Incomer">Bosowa - Incomer </option>
+              <option value="Pangkep - Tonasa">Pangkep - Tonasa</option>
+              <option value="Pangkep - Tello">Pangkep - Tello</option>
+              <option value="Balusu - Maros">Balusu - Maros</option>
             </select>
             <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
               <svg
@@ -50,7 +79,7 @@ const MonitoringRow = () => {
             <Link to="/NewDataMR">New Data</Link>
           </button>
         </div>
-        <TableMonitoring />
+        <TableMonitoring dataMR={data}/>
         <div className="flex justify-end pr-5 pb-5">
               <button className=" text-black py-2 px-4 rounded mr-2 hover:bg-primary-dark transition duration-300 text-xs">
                 Previous

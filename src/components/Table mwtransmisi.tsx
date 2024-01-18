@@ -22,10 +22,15 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
   // const [lastUpdate, setLastUpdate] = useState(getCurrentTime());
   const [dataChangeCount, setDataChangeCount] = useState(0);
   const [tableData, setTableData] = useState(data);
+<<<<<<< HEAD
   const [deleteId, setDeleteId] = useState('');
 
   
 
+=======
+  
+
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   const openEditModal = (id: number, name: string, link: string, nama_GI: string) => {
     if (id !== undefined) {
       setEditItemId(Number(id));
@@ -46,8 +51,13 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
   
 
   const handleEditData = async (id: number, name: string, link: string, nama_GI: string, lastUpdate: Date) => {
+<<<<<<< HEAD
     // console.log('Before update:', tableData);
     // console.log(name, link, nama_GI)
+=======
+    console.log('Before update:', tableData);
+    console.log(name, link, nama_GI)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   
     // Create a copy of the current tableData array
     const updatedData = tableData.map((item) =>
@@ -57,6 +67,10 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
     try {
       const response = await axios.put(`http://localhost:5000/masterdata/${id}`, {name, link, nama_GI})
       const result = response.data
+<<<<<<< HEAD
+=======
+      console.log(result)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     } catch (error) {
       console.log("error")
       console.log(error.message)
@@ -85,6 +99,10 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
     try {
       const response = await axios.delete(`http://localhost:5000/masterdata/${id}`)
       const result = response.data
+<<<<<<< HEAD
+=======
+      console.log(result)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     } catch (error) {
       console.log("error")
       console.log(error.message)
@@ -97,6 +115,11 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
 
   useEffect(() => {
     setTableData(data);
+<<<<<<< HEAD
+=======
+    console.log("tableData")
+    console.log(tableData)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   });
 
 
@@ -159,7 +182,11 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
           <div className="flex items-center space-x-2 ">
                   <button 
                     className="hover:text-primary bg-[#42AEC3] p-0.5 rounded-sm shadow border"
+<<<<<<< HEAD
                     onClick={() => {setEditItemId(item.id);openEditModal(item.id, item.name, item.link, item.nama_GI)}}
+=======
+                    onClick={() => openEditModal(item.id, item.name, item.link, item.nama_GI)}
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
                   >
                     <svg
                       className="fill-current"
@@ -212,7 +239,11 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
             isOpen={isEditModalOpen}
             closeModal={() => setEditModalOpen(false)}
             handleEditData={handleEditData}
+<<<<<<< HEAD
             initialId={editItemId}
+=======
+            initialId={item.id}
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
             initialName={editedName}
             initialLink={editedLink}          
             initialNamaGI={editedNamaGI}         
@@ -223,7 +254,11 @@ const Tablemwtransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) =
           isOpen={isDeleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
           handleDelete={handleDelete}
+<<<<<<< HEAD
           id = {deleteId}
+=======
+          id = {item.id}
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         />
         </div>
         ))}

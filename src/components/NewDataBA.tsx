@@ -3,8 +3,11 @@ import Breadcrumb from './Breadcrumb';
 import ImageUploadModal from './ModalUploadBA';
 import axios from 'axios';
 import { BsColumnsGap } from 'react-icons/bs';
+<<<<<<< HEAD
 // import Toast from './Toast';
 import { ToastContainer, toast } from 'react-toastify';
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
 
 const NewDataBA = () => {
@@ -13,6 +16,11 @@ const NewDataBA = () => {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log("data")
+    console.log({...data})
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   },[data])
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -61,11 +69,19 @@ const NewDataBA = () => {
           "Content-Type": "multipart/form-data"
         }
       })
+<<<<<<< HEAD
       if(result.status === 201) toast.success("berhasil")
       else throw new Error(result.data)
     } catch (error) {
       console.log(error)
       toast.error("gagal")
+=======
+      console.log("result")
+      console.log(result)
+    } catch (error) {
+      console.log("error")
+      console.log(error)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     }
   }
   

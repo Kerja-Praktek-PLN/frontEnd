@@ -24,6 +24,7 @@ const MonitoringRow = () => {
       }
     }
 
+<<<<<<< HEAD
   const handleDelete = async (id) => {
     const response = await axios.delete(`http://localhost:5000/row/${id}`)
     fetchData()
@@ -31,6 +32,12 @@ const MonitoringRow = () => {
 
     useEffect(() =>{
       fetchData()
+=======
+    useEffect(() =>{
+      fetchData()
+      console.log("data")
+      console.log(data)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     },[filter])
 
     const runFilter = (e: any) =>{
@@ -82,7 +89,11 @@ const MonitoringRow = () => {
             <Link to="/NewDataMR">New Data</Link>
           </button>
         </div>
+<<<<<<< HEAD
         <TableMonitoring dataMR={data} deleteHandler={handleDelete}/>
+=======
+        <TableMonitoring dataMR={data}/>
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         <div className="flex justify-end pr-5 pb-5">
               <button className=" text-black py-2 px-4 rounded mr-2 hover:bg-primary-dark transition duration-300 text-xs">
                 Previous

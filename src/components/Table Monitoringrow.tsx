@@ -4,7 +4,10 @@ import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
 import { Link } from 'react-router-dom';
 import EditdataMonitoring from './EditDataMonitoring';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
 type EditModalProps = {
     isOpen: boolean;
@@ -12,10 +15,16 @@ type EditModalProps = {
     handleEdit: (data: { name: string; link: string }) => void;
   };
 
+<<<<<<< HEAD
 const TableMonitoring = ({dataMR, deleteHandler}) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
+=======
+const TableMonitoring = ({dataMR}) => {
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   const [data, setData] = useState([{}]);
   
   const [editedName, setEditedName] = useState('');
@@ -41,7 +50,11 @@ const TableMonitoring = ({dataMR, deleteHandler}) => {
     return date.toLocaleDateString('en-US');
   }
 
+<<<<<<< HEAD
   const openDeleteModal = (id) => {
+=======
+  const openDeleteModal = () => {
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     setDeleteModalOpen(true);
     setDeleteId(id)
   };
@@ -162,12 +175,21 @@ const TableMonitoring = ({dataMR, deleteHandler}) => {
                   <p className="text-xs text-black dark:text-white sm:block">{item.jarak_pohon_ke_konduktor}</p>
               </div>
 
+<<<<<<< HEAD
               {/* <div className="sm:block p-1.5 xl:p-2.5 border-r">
                   <p className="text-xs text-black dark:text-white sm:block">{item.tindak_lanjut}</p>
               </div> */}
 
               <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 col-span-2">
               <div className="flex items-center space-x-2">
+=======
+              <div className="sm:block p-1.5 xl:p-2.5 border-r">
+                  <p className="text-xs text-black dark:text-white sm:block">{item.tindak_lanjut}</p>
+              </div>
+
+              <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5">
+              <div className="flex items-center space-x-2 ">
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
               <Link to={`/EditdataMonitoring/${item.id}`}>
                     <button 
                       className="hover:text-primary bg-[#42AEC3] p-0.5 mt-0.5 rounded-sm shadow border"
@@ -190,7 +212,11 @@ const TableMonitoring = ({dataMR, deleteHandler}) => {
                     </Link>
                     <button 
                       className="hover:text-primary bg-[#FF0000] p-0.5 rounded-sm border shadow"
+<<<<<<< HEAD
                       onClick={() => openDeleteModal(item.id)}  
+=======
+                      onClick={openDeleteModal}  
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
                     >
                       <svg
                         className="fill-current"

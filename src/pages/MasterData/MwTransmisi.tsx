@@ -68,11 +68,20 @@ const mwTransmisi = () => {
     };
     
     try {
+<<<<<<< HEAD
+=======
+      console.log("run fetch data")
+      console.log(newData)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       const response = await axios.post('http://localhost:5000/mw', newData)
       const result = response.data
       console.log(result)
       await fetchData();
     } catch (error) {
+<<<<<<< HEAD
+=======
+      console.log("error")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       console.log(error.message)
     }
 
@@ -103,7 +112,11 @@ const mwTransmisi = () => {
 
     return (
       <>
+<<<<<<< HEAD
       <Breadcrumb pageName="Mw Transmisi" />
+=======
+      <Breadcrumb pageName="Transmisi" />
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       <div className="bg-white">
         <div className="flex justify-between p-5">
           <div className="mb-4.5">

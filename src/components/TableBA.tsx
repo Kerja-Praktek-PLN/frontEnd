@@ -24,6 +24,11 @@ const TableBA = ({dataBA}) => {
   const [deleteTarget, setDeleteTarget]= useState(null);
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log("dataBA dari tableBA");
+    console.log(dataBA);
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     setData(dataBA);
   },[dataBA])
 
@@ -49,16 +54,35 @@ const TableBA = ({dataBA}) => {
   };
 
   const handleDelete = async () => {
+<<<<<<< HEAD
+=======
+    console.log("id confirmed deletion")
+    console.log(deleteTarget)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     setData(prev => 
       data.filter((item) => item.id !== deleteTarget)
     )
     const result = await axios.delete(`http://localhost:5000/BA/${deleteTarget}`)
+<<<<<<< HEAD
+=======
+    if(result.status === 200){
+      console.log("success")
+    }
+    else {
+      console.log("failed")
+      console.log(result)
+    }
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     setDeleteModalOpen(false);
   };
   return (
     <>
       <div id="pdf-content" className="flex flex-col px-20 pb-10 overflow-x-auto">
+<<<<<<< HEAD
         <div className="grid grid-cols-9 rounded-sm bg-gray-2 border dark:bg-meta-4 sm:grid-cols-12">
+=======
+        <div className="grid grid-cols-8 rounded-sm bg-gray-2 border dark:bg-meta-4 sm:grid-cols-12">
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
           <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
             <h5 className="text-xs font-medium font-bold xsm:text-sm">
               No.
@@ -144,7 +168,15 @@ const TableBA = ({dataBA}) => {
           </div>
 
           <div className="sm:block p-1.5 xl:p-2.5 border-r">
+<<<<<<< HEAD
               <p className="text-xs text-black p-1.5 dark:text-white sm:block">{item.id}</p>
+=======
+            {item?.monitoringRow.length !== 0 ? item.monitoringRow.map((mr)=>
+              <p className="text-xs text-black p-1.5 dark:text-white sm:block">{mr.nomor_tower}</p>
+            ) :
+              <p className="text-xs text-black p-1.5 dark:text-white sm:block">{item.nomor_tower}</p>
+            }
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
           </div>
 
           <div className="flex flex-col items-between justify-center col-span-3 border-r">

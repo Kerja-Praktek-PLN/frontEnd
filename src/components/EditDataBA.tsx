@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import Breadcrumb from './Breadcrumb';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+<<<<<<< HEAD
 import { ToastContainer, toast } from 'react-toastify';
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
 const EditdataMonitoring = () => {
 
@@ -25,6 +28,10 @@ const EditdataMonitoring = () => {
           ...result,
           tanggal: parseDate(result.createdAt)
         })
+<<<<<<< HEAD
+=======
+        console.log(result);
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       } catch (error) {
         console.error('Error fetching data:', error);
         }
@@ -36,7 +43,13 @@ const EditdataMonitoring = () => {
       const { name, value, type } = event.target;
       var dummy = value
       if(name === 'tanggal') {
+<<<<<<< HEAD
         dummy = parseDate(value)
+=======
+        console.log('iya ini tanggal')
+        dummy = parseDate(value)
+        console.log(dummy)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       }
       if(type === 'number') dummy = parseInt(value)
       setForm((prev)=>{
@@ -49,6 +62,11 @@ const EditdataMonitoring = () => {
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
+<<<<<<< HEAD
+=======
+        console.log('masuk sini')
+        console.log(file)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         if (file) {
           const reader = new FileReader();
           reader.onload = () => {
@@ -71,16 +89,28 @@ const EditdataMonitoring = () => {
 
     const onSubmitHandler = async () => {
     try {
+<<<<<<< HEAD
+=======
+      // delete form.gambar_sebelum
+      // delete form.gambar_setelah
+      console.log(form)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       const result = await axios.put(`http://localhost:5000/BA/${idBA}`, form, {
         headers:{ 
           "Content-Type": "multipart/form-data"
         }
       })
+<<<<<<< HEAD
       console.log(result)
       if(result.status === 200) toast.success("berhasil")
       else throw new Error(result.data)
     } catch (error) {
       toast.error(error.message)
+=======
+    } catch (error) {
+      console.log("error")
+      console.log(error)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     }
   }
     
@@ -274,7 +304,10 @@ const EditdataMonitoring = () => {
           </button>
       </div>
     </div>
+<<<<<<< HEAD
     <ToastContainer position='bottom-right' />
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     </>
     );
 };

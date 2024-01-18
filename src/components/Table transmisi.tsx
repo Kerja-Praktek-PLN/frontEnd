@@ -47,6 +47,13 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
   
 
   const handleEditData = async (id: number, name: string, link: string, nama_GI: string, lastUpdate: Date) => {
+<<<<<<< HEAD
+=======
+    console.log('Before update:', tableData);
+    console.log(name, link, nama_GI)
+  
+    // Create a copy of the current tableData array
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     const updatedData = tableData.map((item) =>
       item.id === id ? { ...item, name, link, lastUpdate, nama_GI  } : item
     );
@@ -54,7 +61,13 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
     try {
       const response = await axios.put(`http://localhost:5000/masterdata/${id}`, {name, link, nama_GI})
       const result = response.data
+<<<<<<< HEAD
     } catch (error) {
+=======
+      console.log(result)
+    } catch (error) {
+      console.log("error")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       console.log(error.message)
     }
     
@@ -81,7 +94,13 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
     try {
       const response = await axios.delete(`http://localhost:5000/masterdata/${id}`)
       const result = response.data
+<<<<<<< HEAD
     } catch (error) {
+=======
+      console.log(result)
+    } catch (error) {
+      console.log("error")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       console.log(error.message)
     }
     // Update tableData using setTableData
@@ -92,6 +111,8 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
 
   useEffect(() => {
     setTableData(data);
+    console.log("tableData")
+    console.log(tableData)
   });
 
 
@@ -154,7 +175,11 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
           <div className="flex items-center space-x-2 ">
                   <button 
                     className="hover:text-primary bg-[#42AEC3] p-0.5 rounded-sm shadow border"
+<<<<<<< HEAD
                     onClick={() =>{ openEditModal(item.id, item.name, item.link, item.nama_GI)}}
+=======
+                    onClick={() => openEditModal(item.id, item.name, item.link, item.nama_GI)}
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
                   >
                     <svg
                       className="fill-current"

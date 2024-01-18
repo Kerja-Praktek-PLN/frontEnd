@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import Breadcrumb from './Breadcrumb';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+<<<<<<< HEAD
 import { ToastContainer } from 'react-toastify';
 import toast from 'react-hot-toast';
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
 const EditdataMonitoring = () => {
 
@@ -25,6 +28,10 @@ const EditdataMonitoring = () => {
           ...result,
           tanggal: parseDate(result.createdAt)
         })
+<<<<<<< HEAD
+=======
+        console.log(result);
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       } catch (error) {
         console.error('Error fetching data:', error);
         }
@@ -56,10 +63,16 @@ const EditdataMonitoring = () => {
     try {
       console.log(form)
       const result = await axios.put(`http://localhost:5000/row/${idBA}`, form)
+<<<<<<< HEAD
       if(result.status === 201) toast.success("berhasil")
       else throw new Error(result.data)
     } catch (error) {
       toast.error(error.message)
+=======
+    } catch (error) {
+      console.log("error")
+      console.log(error)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     }
   }
     
@@ -216,6 +229,7 @@ const EditdataMonitoring = () => {
                 className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
+<<<<<<< HEAD
               <div className="mb-4.5 w-54">
                 <label htmlFor='ba_id' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
                   Id Berita Acara
@@ -229,6 +243,10 @@ const EditdataMonitoring = () => {
                   className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div> 
+=======
+
+            <div className='mb-4.5 w-54'></div>    
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         </div>
 
         <div className='flex grid-cols-2 mt-3 justify-between'>
@@ -321,7 +339,10 @@ const EditdataMonitoring = () => {
           </button>
       </div>
     </div>
+<<<<<<< HEAD
     <ToastContainer position='bottom-right' />
+=======
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     </>
     );
 };

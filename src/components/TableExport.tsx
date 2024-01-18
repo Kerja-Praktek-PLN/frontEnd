@@ -24,6 +24,11 @@ const TableExport = ({data, id}) => {
   const [deleteTarget, setDeleteTarget]= useState(null);
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log("data dari TableExport");
+    console.log(data);
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
     setContent(data);
   },[data])
 
@@ -45,7 +50,11 @@ const TableExport = ({data, id}) => {
           </div>
           <div className="hidden p-1.5 text-center sm:block xl:p-2.5 border-r">
             <h5 className="text-xs font-medium font-bold xsm:text-sm">
+<<<<<<< HEAD
               Id
+=======
+              No Tower
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
             </h5>
           </div>
           <div className="flex flex-col items-center justify-center col-span-3 border-r">
@@ -113,7 +122,15 @@ const TableExport = ({data, id}) => {
           </div>
 
           <div className="sm:block p-1.5 xl:p-2.5 border-r">
+<<<<<<< HEAD
               <p className="text-xs text-black p-1.5 dark:text-white sm:block">{item.id}</p>
+=======
+            {item?.monitoringRow.length !== 0 ? item.monitoringRow.map((mr)=>
+              <p className="text-xs text-black p-1.5 dark:text-white sm:block">{mr.nomor_tower}</p>
+            ) :
+              <p className="text-xs text-black p-1.5 dark:text-white sm:block">{item.nomor_tower}</p>
+            }
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
           </div>
 
           <div className="flex flex-col items-between justify-center col-span-3 border-r">
@@ -132,9 +149,15 @@ const TableExport = ({data, id}) => {
               )}
           </div>
           
+<<<<<<< HEAD
           <div className="sm:block border-r">
             {item.monitoringRow.map((mr,i)=>
               <p className={`text-xs text-black p-3 dark:text-white sm:block w-full ${(i==0)? "": "border-t"}`}>{mr.jalur}</p>
+=======
+          <div className="sm:block p-1.5 xl:p-2.5 border-r">
+            {item.monitoringRow.map((mr)=>
+              <p className="text-xs text-black p-1.5 dark:text-white sm:block">{mr.jalur}</p>
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
             )}
           </div>
 

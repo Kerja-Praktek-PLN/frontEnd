@@ -43,6 +43,10 @@ const Transmisi = () => {
 
   useEffect(() => {
     fetchData()
+<<<<<<< HEAD
+=======
+    console.log(data)
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
   }, [filter])
 
   const openModal = () => {
@@ -67,10 +71,21 @@ const Transmisi = () => {
     };
     
     try {
+<<<<<<< HEAD
       const response = await axios.post('http://localhost:5000/transmisi', newData)
       const result = response.data
       await fetchData();
     } catch (error) {
+=======
+      console.log("run fetch data")
+      console.log(newData)
+      const response = await axios.post('http://localhost:5000/transmisi', newData)
+      const result = response.data
+      console.log(result)
+      await fetchData();
+    } catch (error) {
+      console.log("error")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
       console.log(error.message)
     }
 

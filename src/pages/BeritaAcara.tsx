@@ -4,6 +4,34 @@ import Breadcrumb from "../components/Breadcrumb";
 import TableBA from "../components/TableBA";
 import { Link } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import JsPDF, { jsPDF } from 'jspdf';
+import html2pdf from 'html2pdf.js';
+import html2canvas from 'html2canvas';
+
+const generatePDF = (component, props, filename) => {
+    const element = createElement(component, props);
+    console.log("element")
+    console.log(element)
+    const opt = {
+        margin: 10,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+
+    // html2pdf(element, opt);
+    html2canvas(element)
+        .then((canvas) => {
+            const img = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(img)
+            pdf.save("test.pdf")
+        })
+};
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
 
 
@@ -13,6 +41,20 @@ const BeritaAcara = () => {
     const [loading,setLoading] = useState(false)
     const [filter, setFilter] = useState({})
 
+<<<<<<< HEAD
+=======
+    const handleExport = () => {
+        // const report = new jsPDF('landscape','px','a4');
+        // report.html(createElement(TableBA, {dataBA: data}), {
+
+        // }).then(() => {
+        //     report.save('report.pdf');
+        // });
+        // console.log("exporting")
+        generatePDF(TableBA, {dataBA: data}, 'example.pdf');
+    }
+
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
 
     const fetchData = async () => {
         try {
@@ -31,6 +73,10 @@ const BeritaAcara = () => {
     }
 
     const runFilter = (e: any) =>{
+<<<<<<< HEAD
+=======
+        console.log("filter berubah")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         const {value, name} = e.target
         setFilter((prev)=>{
             return{
@@ -38,9 +84,19 @@ const BeritaAcara = () => {
                 [name] : value,
             }
         })
+<<<<<<< HEAD
     }
 
     useEffect(() => {
+=======
+        console.log("filter")
+        console.log(...filter)
+        console.log({value, name})
+    }
+
+    useEffect(() => {
+        console.log("page reload")
+>>>>>>> a8cf4c21c894d02e51b3678598ef348808907633
         fetchData();
     },[filter])
 

@@ -1,19 +1,87 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumb from './Breadcrumb';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import toast from 'react-hot-toast';
 
+const EditdataMonitoring = () => {
 
+  const [data,setData] = useState({})
+  const {idBA} = useParams()
+  const [form, setForm] = useState({})
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/row/${idBA}`);
+        const result = await response.data;
+        setData({
+          ...result,
+          tanggal: parseDate(result.createdAt)
+        });
+        setForm({
+          ...result,
+          tanggal: parseDate(result.createdAt)
+        })
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        }
+      }
+      fetchData();
+    },[])
+    
+    const handleInputChange = (event: any) => {
+      const { name, value, type } = event.target;
+      var dummy = value
+      if(name === 'tanggal') {
+        dummy = parseDate(value)
+      }
+      if(type === 'number') dummy = parseInt(value)
+      setForm((prev)=>{
+        return {
+          ...prev,
+          [name]: dummy
+        }
+      });
+    };
 
-// const EditdataMonitoring = ({ isOpen, closeModal, handleEditData }) => {
-  const EditdataMonitoring = () => {
+    const parseDate = (isoDate: any) => {
+      const date = new Date(isoDate)
+      return date.toISOString().split('T')[0]
+    }
+
+    const onSubmitHandler = async () => {
+    try {
+      console.log(form)
+      const result = await axios.put(`http://localhost:5000/row/${idBA}`, form)
+      if(result.status === 201) toast.success("berhasil")
+      else throw new Error(result.data)
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+    
     return (
-        <>
+      <>
     <Breadcrumb pageName='EditData' />
     <div className='bg-white'>
       <div className='p-5'>
         <div className='text-black font-bold text-xl'>Edit Data</div>
         <div className='w-20 h-px border border-black my-2'/>
-        <div className='text-black font-medium text-lg'>Rute Transmisi : </div>
+        <div className='text-black font-medium text-lg'>Rute Transmisi : 
+        <select value={form.rute_transmisi} onChange={handleInputChange} name="rute_transmisi" className="shadow text-sm relative z-20 w-1/3 appearance-none rounded border border-stroke bg-transparent py-2 px-4 mx-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+          <option value="" selected disabled>Rute Transmisi</option>
+          <option value="Tello - Mandai">Tello - Mandai</option>
+          <option value="Mandai - Pangkep">Mandai - Pangkep</option>
+          <option value="Maros - DayaBaru">Maros - DayaBaru</option>
+          <option value="Bosowa - Incomer ">Bosowa - Incomer </option>
+          <option value="Pangkep - Tonasa">Pangkep - Tonasa</option>
+          <option value="Pangkep - Tello">Pangkep - Tello</option>
+          <option value="Balusu - Maros">Balusu - Maros</option>
+        </select>
+        </div>
       </div>
       <div className='px-7 pb-7'>
         <div className='flex grid-cols-3 justify-between w-full'>
@@ -24,6 +92,9 @@ import Breadcrumb from './Breadcrumb';
             <div className="relative w-full">
               <input
                 type="date"
+                name='tanggal'
+                onChange={handleInputChange}
+                value={form.tanggal}
                 className="shadow text-sm custom-input-date custom-input-date-1 w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
@@ -34,12 +105,11 @@ import Breadcrumb from './Breadcrumb';
                 Status
               </label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
-                <select className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                  <option value="">Type your subject</option>
-                  <option value="">AMAN</option>
-                  <option value="">B1</option>
-                  <option value="">B2</option>
-                  <option value="">KRITIS</option>
+                <select onChange={handleInputChange} name="status_tegakan" value={form.status_tegakan} className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                  <option value="aman">AMAN</option>
+                  <option value="b2">B1</option>
+                  <option value="b1">B2</option>
+                  <option value="kritis">KRITIS</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -68,10 +138,9 @@ import Breadcrumb from './Breadcrumb';
                 Tindak Lanjut
               </label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
-                <select className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                  <option value="">Type your subject</option>
-                  <option value="">Sudah Pangkas</option>
-                  <option value="">Sudah Tebang</option>
+                <select onChange={handleInputChange} value={form.tindak_lanjut} name='tindak_lanjut' className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                  <option value="sudah pangkas">Sudah Pangkas</option>
+                  <option value="sudah tebang">Sudah Tebang</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -102,16 +171,15 @@ import Breadcrumb from './Breadcrumb';
                 Nama PIC Inspeksi
               </label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
-                <select className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                  <option value="">Type your subject</option>
-                  <option value="">H IDHAM PEWATA</option>
-                  <option value="">RIZAL</option>
-                  <option value="">FAUZAN AULIAH</option>
-                  <option value="">REZKA</option>
-                  <option value="">MAHFUD</option>
-                  <option value="">MAHARONI</option>
-                  <option value="">SAHARUDDIN</option>
-                  <option value="">TIMHAR ULTG</option>
+                <select onChange={handleInputChange} value={form.nama_PIC} name="nama_PIC" className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                  <option value="H IDHAM PEWATA">H IDHAM PEWATA</option>
+                  <option value="RIZAL">RIZAL</option>
+                  <option value="FAUZAN AULIAH">FAUZAN AULIAH</option>
+                  <option value="REZKA">REZKA</option>
+                  <option value="MAHFUD">MAHFUD</option>
+                  <option value="MAHARONI">MAHARONI</option>
+                  <option value="SAHARUDDIN">SAHARUDDIN</option>
+                  <option value="TIMHAR ULTG">TIMHAR ULTG</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -141,12 +209,26 @@ import Breadcrumb from './Breadcrumb';
               </label>
               <input
                 type="text"
+                onChange={handleInputChange}
+                value={form.jenis_pohon}
+                name="jenis_pohon"
                 placeholder="Jenis Pohon"
                 className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
-
-            <div className='mb-4.5 w-54'></div>    
+              <div className="mb-4.5 w-54">
+                <label htmlFor='ba_id' className="mb-2.5 block text-black dark:text-white font-medium text-sm">
+                  Id Berita Acara
+                </label>
+                <input
+                  type="number"
+                  name='ba_id'
+                  value={form.ba_id}
+                  onChange={handleInputChange}
+                  placeholder="Input Nomor Tower"
+                  className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div> 
         </div>
 
         <div className='flex grid-cols-2 mt-3 justify-between'>
@@ -156,6 +238,9 @@ import Breadcrumb from './Breadcrumb';
             </label>
             <input
               type="text"
+              value={form.nomor_tower}
+              name="nomor_tower"
+              onChange={handleInputChange}
               placeholder="Input Nomor Tower"
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             />
@@ -166,10 +251,9 @@ import Breadcrumb from './Breadcrumb';
                 Bawah Jalur / Luar Jalur
               </label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
-                <select className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                  <option value="">Type your subject</option>
-                  <option value="">Bawah Jalur</option>
-                  <option value="">Luar Jalur</option>
+                <select onChange={handleInputChange} value={form.jalur} name='jalur' className="shadow text-sm relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-2 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                  <option value="bawah">Bawah Jalur</option>
+                  <option value="luar">Luar Jalur</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                   <svg
@@ -203,8 +287,10 @@ import Breadcrumb from './Breadcrumb';
               Jumlah Tegakan
             </label>
             <input
-              type="text"
-              placeholder=""
+              type="number"
+              value={form.jumlah_tegakan}
+              onChange={handleInputChange}
+              name='jumlah_tegakan'
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             />
           </div>
@@ -215,7 +301,9 @@ import Breadcrumb from './Breadcrumb';
             </label>
             <input
               type="text"
-              placeholder="ex 3.6"
+              value={form.jarak_pohon_ke_konduktor}
+              onChange={handleInputChange}
+              name='jarak_pohon_ke_konduktor'
               className="shadow text-sm w-full rounded border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             />
           </div>
@@ -226,20 +314,16 @@ import Breadcrumb from './Breadcrumb';
 
         <button
             type="submit"
+            onClick={onSubmitHandler}
             className="flex w-50 mt-5 justify-center item-center mx-auto rounded bg-[#469AA7] p-3 font-medium text-gray"
           >
             Submit
           </button>
       </div>
     </div>
+    <ToastContainer position='bottom-right' />
     </>
     );
-};
-
-EditdataMonitoring.propTypes =  {
-  isOpen: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  handleEditData: PropTypes.func.isRequired,
 };
 
 export default EditdataMonitoring;

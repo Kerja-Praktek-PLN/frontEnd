@@ -8,6 +8,7 @@ import Loader from './common/Loader';
 import routes from './routes';
 import Home from './pages/Dashboard/Home';
 import ConfirForgetpass from './pages/Authentication/confirmation';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 

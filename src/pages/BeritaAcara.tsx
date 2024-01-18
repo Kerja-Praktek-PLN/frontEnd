@@ -1,11 +1,49 @@
 // import { useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import TableBA from "../components/TableBA";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 
 const BeritaAcara = () => {
+    const [data,setData] = useState([])
+    const [rute, setRute] = useState("")
+    const [loading,setLoading] = useState(false)
+    const [filter, setFilter] = useState({})
+
+
+    const fetchData = async () => {
+        try {
+            var query = Object.keys(filter).map((key) => `${key}=${filter[key]}`).join("&")
+            query = new URL(`http://localhost:5000/BA?${query}`).href
+            console.log(query)
+            const response = await axios.get(query);
+            const result = await response.data;
+            setData(result);
+            console.log(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const runFilter = (e: any) =>{
+        const {value, name} = e.target
+        setFilter((prev)=>{
+            return{
+                ...prev,
+                [name] : value,
+            }
+        })
+    }
+
+    useEffect(() => {
+        fetchData();
+    },[filter])
+
     return (
         <>
         <Breadcrumb pageName="Berita Acara" />
@@ -14,14 +52,15 @@ const BeritaAcara = () => {
         <div className="flex justify-between p-5">
             <div className="mb-4.5">
             <div className="relative z-20 bg-transparent dark:bg-form-input drop-shadow-lg w-54 bg-white rounded-sm">
-                <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                <option value="">Tello - Mandai</option>
-                <option value="">Mandai - Pangkep</option>
-                <option value="">Maros - DayaBaru</option>
-                <option value="">Bosowa - Incomer </option>
-                <option value="">Pangkep - Tonasa</option>
-                <option value="">Pangkep - Tello</option>
-                <option value="">Balusu - Maros</option>
+                <select onChange={runFilter} name="rute" className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                    <option value="ALL" selected>No Filter</option>
+                    <option value="Tello - Mandai">Tello - Mandai</option>
+                    <option value="Mandai - Pangkep">Mandai - Pangkep</option>
+                    <option value="Maros - DayaBaru">Maros - DayaBaru</option>
+                    <option value="Bosowa - Incomer">Bosowa - Incomer </option>
+                    <option value="Pangkep - Tonasa">Pangkep - Tonasa</option>
+                    <option value="Pangkep - Tello">Pangkep - Tello</option>
+                    <option value="Balusu - Maros">Balusu - Maros</option>
                 </select>
                 <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                 <svg
@@ -44,22 +83,33 @@ const BeritaAcara = () => {
                 </span>
                 </div>
             </div>
-            <button
-                className="bg-[#469AA7] text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300 w-28 h-10"
-            >
-            <Link to="/NewDataBA">New Data</Link>
-            </button>
+            <div>
+                <button
+                    className="bg-[#469AA7] text-white py-2 px-4 mr-5 rounded hover:bg-primary-dark transition duration-300 w-28 h-10"
+                >
+                <Link to="/NewDataBA">New Data</Link>
+                </button>
+                <button
+                    className="bg-danger text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300 h-10"
+                    // onClick={handleExport}berit
+                >
+                
+                <Link to="/ExportToPDF">Export to PDF</Link>
+                </button>
+            </div>
             </div>
             <h1 className="pl-3 text-black text-opacity-70 text-xl font-medium">Tanggal</h1>
             <div className="mb-4.5 p-5">
                 <div className="relative z-20 bg-transparent dark:bg-form-input drop-shadow-lg w-54 bg-white rounded-sm">
                 <input
                     type="date"
+                    onChange={runFilter}
+                    name="tanggal"
                     className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 </div>
             </div>
-            <TableBA />
+            <TableBA dataBA={data} />
             <div className="flex justify-end pr-5 pb-5">
                 <button className=" text-black py-2 px-4 rounded mr-2 hover:bg-primary-dark transition duration-300 text-xs">
                     Previous

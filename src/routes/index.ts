@@ -11,9 +11,11 @@ const Transmisi = lazy (() => import('../pages/MasterData/Transmisi'));
 const MonitoringRow = lazy (() => import('../pages/MonitoringRow'));
 const helpFeedback = lazy (() => import('../pages/HelpFeedback'));
 const NewDataMR = lazy (() => import('../components/NewDataMR'));
-const EditDataMonitoring = lazy (() => import('../components/EdtiDataMonitoring'));
+const EditDataMonitoring = lazy (() => import('../components/EditDataMonitoring'));
+const EditDataBA = lazy (() => import('../components/EditDataBA'));
 const BeritaAcara = lazy (() => import('../pages/BeritaAcara'));
 const NewDataBA = lazy (() => import('../components/NewDataBA'));
+const ExportPDF = lazy (() => import('../pages/ExportPDF'));
 
 const coreRoutes = [
   {
@@ -57,9 +59,14 @@ const coreRoutes = [
     component: NewDataMR,
   },
   {
-    path: '/editdatamonitoring',
+    path: '/editdatamonitoring/:idBA',
     title: 'editdatamonitoring',
     component: EditDataMonitoring,
+  },
+  {
+    path: '/editdataba/:idBA',
+    title: 'editdataba',
+    component: EditDataBA,
   },
   {
     path: '/beritaacara',
@@ -85,6 +92,11 @@ const coreRoutes = [
     path: '/profile',
     title: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/ExportToPDF',
+    title: 'ExportPDF',
+    component: ExportPDF,
   },
 ];
 

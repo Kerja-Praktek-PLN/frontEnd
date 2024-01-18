@@ -9,13 +9,11 @@ const SignIn: React.FC = () => {
 
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("test");
     try {
         const data = await axios.post('http://localhost:5000/login', {
             email,
             password
         });
-        console.log(data);
         window.location.href = "/home";
     } catch (error) {
         console.log(error);

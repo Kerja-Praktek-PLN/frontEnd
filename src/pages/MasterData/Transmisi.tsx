@@ -1,21 +1,49 @@
+import axios from "axios";
 import Breadcrumb from "../../components/Breadcrumb";
 import Tabletransmisi from "../../components/Table transmisi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 type DataType = {
   id: number;
   name: string;
   link: string;
-  lastUpdate: Date;
+  nama_GI: string;
+  last_update: Date;
 };
 
 const Transmisi = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  const [namaGI, setnamaGI] = useState('');
   const [data, setData] = useState<DataType[]>([]);
   const [lastUpdate, setLastUpdate] =  useState(getCurrentTime());
+  const [dataChangeCount, setDataChangeCount] = useState(0)
+  const [filter, setFilter] = useState("")
+
+  const fetchData = async () => {
+    var query = new URL(`http://localhost:5000/transmisi?GI=${filter}`).href
+    const response = await axios.get(query)
+    const result = response.data
+    setData(prev => [...result.map((item,index) =>  {
+      return {
+        id: item.id,
+        name: item.name,
+        link: item.link,
+        nama_GI: item.nama_GI,
+        last_update: new Date(item.updatedAt).toISOString().split('T')[0]
+      }
+    })])
+  }
+
+  const runFilter = (e: any) =>{
+    setFilter(e.target.value)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [filter])
 
   const openModal = () => {
     setModalOpen(true);
@@ -25,35 +53,41 @@ const Transmisi = () => {
     setModalOpen(false);
   }
 
-  const handleAddData = () => {
-    if (name.trim() === '' || link.trim() === '') {
-      return;
+  const handleAddData = async () => {
+      if (name.trim() === '' || link.trim() === '') {
+        return;
+      }
+
+    const newData: DataType = {
+      id: data.length + 1,
+      name,
+      link,
+      nama_GI: namaGI,
+      last_update: getCurrentTime(),
+    };
+    
+    try {
+      const response = await axios.post('http://localhost:5000/transmisi', newData)
+      const result = response.data
+      await fetchData();
+    } catch (error) {
+      console.log(error.message)
     }
 
-  const newData: DataType = {
-    id: data.length + 1,
-    name,
-    link,
-    lastUpdate: getCurrentTime(),
+    setName('');
+    setLink('');
+    setnamaGI('');
+    setLastUpdate(getCurrentTime());
+    closeModal();
+    notifyDataChange();
+  }
+  
+  const updateData = async (newData: Array<{ id: number; name: string; link: string, nama_GI: string, lastUpdate: Date }>) => {
+    setData(newData);
+    fetchData()
   };
 
-  setData((prevData) => [...prevData, newData]);
-  
-
-  setName('');
-  setLink('');
-  setLastUpdate(getCurrentTime());
-  closeModal();
-
-  notifyDataChange();
-}
-
-const updateData = (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date }>) => {
-  setData(newData);
-};
-
-
-  const [dataChangeCount, setDataChangeCount] = useState(0);
+;
 
   const notifyDataChange = () => {
     setDataChangeCount((prevCount) => prevCount + 1);
@@ -72,13 +106,14 @@ const updateData = (newData: Array<{ id: number; name: string; link: string, las
         <div className="flex justify-between p-5">
           <div className="mb-4.5">
                   <div className="relative z-20 bg-transparent dark:bg-form-input drop-shadow-lg w-54 bg-white rounded-sm">
-                    <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                      <option value="">GI</option>
-                      <option value="">GI Tello 150 Kv</option>
-                      <option value="">GI Tello 150 Kv</option>
-                      <option value="">GI Tello 150 Kv</option>
-                      <option value="">GI Tello 150 Kv</option>
-                      <option value="">GI Tello 150 Kv</option>
+                    <select onChange={runFilter} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                      <option value="" selected>Gardu Induk</option>
+                      <option value="PLN GARDU INDUK DAYA">PLN GARDU INDUK DAYA</option>
+                      <option value="GI Tello 150 Kv">GI Tello 150 Kv</option>
+                      <option value="Gardu Induk PLN V Mandai">Gardu Induk PLN V Mandai</option>
+                      <option value="PLN GARDU INDUK KIMA">PLN GARDU INDUK KIMA</option>
+                      <option value="PLN GARDU INDUK MAROS">PLN GARDU INDUK MAROS</option>
+                      <option value="PLN GARDU INDUK BOSOWA">PLN GARDU INDUK BOSOWA</option>
                     </select>
                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                       <svg
@@ -158,7 +193,7 @@ const updateData = (newData: Array<{ id: number; name: string; link: string, las
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-[#E5E5E5] py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
                     </div>
-                    <div className="my-5 pb-15 mx-4">
+                    <div className="my-5 mx-4">
                       <input
                         type="text"
                         placeholder="Link File"
@@ -167,7 +202,18 @@ const updateData = (newData: Array<{ id: number; name: string; link: string, las
                         className="w-full rounded-lg border-[1.5px] border-stroke bg-[#E5E5E5] py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
                     </div>
-                {/* conten */}
+                    <div className="my-5 pb-15 mx-4">
+                      <select onChange={(e) => setnamaGI(e.target.value)} placeholder="GI" className="w-full rounded-lg border-[1.5px] border-stroke bg-[#E5E5E5] py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                        <option value="" disabled selected>Gardu Induk</option>
+                        <option value="PLN GARDU INDUK DAYA">PLN GARDU INDUK DAYA</option>
+                        <option value="GI Tello 150 Kv">GI Tello 150 Kv</option>
+                        <option value="Gardu Induk PLN V Mandai">Gardu Induk PLN V Mandai</option>
+                        <option value="PLN GARDU INDUK KIMA">PLN GARDU INDUK KIMA</option>
+                        <option value="PLN GARDU INDUK MAROS">PLN GARDU INDUK MAROS</option>
+                        <option value="PLN GARDU INDUK BOSOWA">PLN GARDU INDUK BOSOWA</option>
+                      </select>
+                    </div>
+                {/* content */}
                 <div className="flex justify-end pb-5">
                   <div className="flex-grow"></div> 
                   <button

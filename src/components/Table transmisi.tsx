@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import EditModal from "./ModalEdit";
 import DeleteConfirmationModal from "./ModalDelete";
 import { format } from 'date-fns';
+import axios from "axios";
 
 type TabletransmisiProps = {
-  data: Array<{ id: number; name: string; link: string, lastUpdate: Date  }>
-  updateData: (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date }>) => void;
+  data: Array<{ id: number; name: string; link: string, lastUpdate: Date, nama_GI: string  }>
+  updateData: (newData: Array<{ id: number; name: string; link: string, lastUpdate: Date, nama_GI: string }>) => void;
 };
 
 
@@ -15,22 +16,27 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [name, setName] = useState ('');
   const [link, setLink] = useState ('');
+  const [namaGI, setNamaGI] = useState ('');
   const [editedName, setEditedName] = useState('');
   const [editedLink, setEditedlink] = useState('');
+  const [editedNamaGI, setEditedNamaGI] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   // const [lastUpdate, setLastUpdate] = useState(getCurrentTime());
   const [dataChangeCount, setDataChangeCount] = useState(0);
   const [tableData, setTableData] = useState(data);
+  const [deleteId, setDeleteId] = useState('');
   
 
-  const openEditModal = (id: number, name: string, link: string) => {
+  const openEditModal = (id: number, name: string, link: string, nama_GI: string) => {
     if (id !== undefined) {
       setEditItemId(Number(id));
       setEditModalOpen(true);
       setEditedName(name);
       setEditedlink(link);
+      setEditedNamaGI(nama_GI);
       setName(name);
       setLink(link);
+      setNamaGI(nama_GI);
       setIsEditing(true);
       updateData;
     } else {
@@ -40,16 +46,18 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
   };
   
 
-  const handleEditData = (id: number, name: string, link: string, lastUpdate: Date) => {
-    console.log('Before update:', tableData);
-  
-    // Create a copy of the current tableData array
+  const handleEditData = async (id: number, name: string, link: string, nama_GI: string, lastUpdate: Date) => {
     const updatedData = tableData.map((item) =>
-      item.id === id ? { ...item, name, link, lastUpdate } : item
+      item.id === id ? { ...item, name, link, lastUpdate, nama_GI  } : item
     );
   
-    console.log('After update:', updatedData);
-  
+    try {
+      const response = await axios.put(`http://localhost:5000/masterdata/${id}`, {name, link, nama_GI})
+      const result = response.data
+    } catch (error) {
+      console.log(error.message)
+    }
+    
     // Use the state updater function to update the state with the new array
     updateData(updatedData); // Make sure to pass an empty array as the first argument
   
@@ -57,8 +65,6 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
     setEditModalOpen(false);
     setIsEditing(false);
   
-    // Log the current state after updating
-    console.log('Current state:', { id, name, link, lastUpdate });
   };  
      
 
@@ -66,11 +72,18 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
     setDeleteModalOpen(true);
   };
 
-  const handleDelete = (id : number) => {
+  const handleDelete = async (id : number) => {
     // Handle delete logic and update the data array
     const updatedData = tableData.filter(
       (item) => !(item.id == id)
     );
+
+    try {
+      const response = await axios.delete(`http://localhost:5000/masterdata/${id}`)
+      const result = response.data
+    } catch (error) {
+      console.log(error.message)
+    }
     // Update tableData using setTableData
     updateData(updatedData);
 
@@ -115,7 +128,7 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
       {tableData.map((item, index) => (
         <div key={index} className="grid grid-cols-8  border sm:grid-cols-12">
         <div className="hidden sm:block p-1.5 xl:p-2.5 border-r">
-          <p className="text-xs text-black dark:text-white sm:block">{item.id}</p>
+          <p className="text-xs text-black dark:text-white sm:block">{index+1}</p>
         </div>
 
           <div className="flex items-center p-1.5 xl:p-2.5 border-r col-span-3">
@@ -124,7 +137,7 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
         
         <div className="flex items-center justify-center p-1.5 xl:p-2.5 border-r col-span-3">
           <a
-              href="item.link"
+              href={item.link}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-meta-3 overflow-hidden overflow-ellipsis underline  "
@@ -134,14 +147,14 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
         </div>
 
           <div className="hidden items-center justify-center p-1.5 sm:flex xl:p-2.5 border-r col-span-3">
-            <p className="text-xs text-black dark:text-white">{item.lastUpdate.toLocaleString()}</p>
+            <p className="text-xs text-black dark:text-white">{item.last_update}</p>
           </div>
         
         <div className="items-center justify-center p-1.5 sm:flex xl:p-2.5 col-span-2">
           <div className="flex items-center space-x-2 ">
                   <button 
                     className="hover:text-primary bg-[#42AEC3] p-0.5 rounded-sm shadow border"
-                    onClick={() => openEditModal(item.id, item.name, item.link)}
+                    onClick={() =>{ openEditModal(item.id, item.name, item.link, item.nama_GI)}}
                   >
                     <svg
                       className="fill-current"
@@ -159,7 +172,7 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
                   </button>
                   <button 
                     className="hover:text-primary bg-[#FF0000] p-0.5 rounded-sm border shadow"
-                    onClick={openDeleteModal}  
+                    onClick={()=>{setDeleteId(item.id);openDeleteModal()}}  
                   >
                     <svg
                       className="fill-current"
@@ -189,14 +202,15 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
                   </button>
                 </div>
           </div>     
- {/* Render the EditModal */}
- <EditModal
+        {/* Render the EditModal */}
+          <EditModal
             isOpen={isEditModalOpen}
             closeModal={() => setEditModalOpen(false)}
             handleEditData={handleEditData}
-            initialId={item.id}
+            initialId={editItemId}
             initialName={editedName}
             initialLink={editedLink}          
+            initialNamaGI={editedNamaGI}         
           />
 
         {/* Render the DeleteConfirmationModal */}
@@ -204,7 +218,7 @@ const Tabletransmisi: React.FC<TabletransmisiProps> = ({ data, updateData }) => 
           isOpen={isDeleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
           handleDelete={handleDelete}
-          id = {item.id}
+          id = {deleteId}
         />
         </div>
         ))}

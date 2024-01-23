@@ -1,1 +1,1 @@
-mia sama thiriq baku suka
+FrontEnd Dev
